@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,13 +17,56 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ow-Yd-2ZD">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="ePa-gL-4iz">
+                                        <rect key="frame" x="123" y="269" width="128" height="128"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product of Ngee Ann Polytechnic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljE-Fj-FvJ">
+                                        <rect key="frame" x="60" y="613" width="254" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Elderly Track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSv-Vq-up0" userLabel="Elderly Track">
+                                        <rect key="frame" x="53" y="115" width="269" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="9gR-1N-Unl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.25007817149162292" green="0.32421481609344482" blue="0.60848742723464966" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ljE-Fj-FvJ" secondAttribute="bottom" constant="33" id="4aq-Jk-Ufa"/>
+                                    <constraint firstItem="ePa-gL-4iz" firstAttribute="centerX" secondItem="6Ow-Yd-2ZD" secondAttribute="centerX" id="OQG-8k-7vN"/>
+                                    <constraint firstItem="hSv-Vq-up0" firstAttribute="centerX" secondItem="ePa-gL-4iz" secondAttribute="centerX" id="bFj-dW-w8L"/>
+                                    <constraint firstItem="ePa-gL-4iz" firstAttribute="centerY" secondItem="6Ow-Yd-2ZD" secondAttribute="centerY" id="iWe-7H-95C"/>
+                                    <constraint firstItem="ePa-gL-4iz" firstAttribute="top" secondItem="hSv-Vq-up0" secondAttribute="bottom" constant="89" id="irj-gQ-OZ5"/>
+                                    <constraint firstItem="ePa-gL-4iz" firstAttribute="centerX" secondItem="ljE-Fj-FvJ" secondAttribute="centerX" id="qzP-ho-VKO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Ow-Yd-2ZD" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="ODU-zB-YLz"/>
+                            <constraint firstAttribute="trailing" secondItem="6Ow-Yd-2ZD" secondAttribute="trailing" id="ZMF-9V-GM5"/>
+                            <constraint firstItem="6Ow-Yd-2ZD" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="fFy-jq-Szh"/>
+                            <constraint firstItem="6Ow-Yd-2ZD" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="qVp-Xd-saS"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launch" width="128" height="128"/>
+    </resources>
 </document>
