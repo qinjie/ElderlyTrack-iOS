@@ -98,12 +98,14 @@ struct alamofire{
                         controller.remarkLabel.text = remark
                         controller.statusLabel.text = "Missing"
                         controller.statusLabel.textColor = UIColor.redApp
-                        controller.resident?.status = true
+                        controller.resident?.status = "true"
                     }else{
                         controller.statusLabel.text = "Available"
-                        controller.resident?.status = false
+                        controller.resident?.status = "false"
                         
                     }
+                    controller.saveRelativeState()
+                    NotificationCenter.default.post(name: Notification.Name("refreshMissingResident"), object: nil)
                 }
             }
         }
@@ -150,7 +152,7 @@ struct alamofire{
                     
                     let newResident = Resident()
                     
-                    newResident.status = json["status"] as! Bool
+                    newResident.status = String(json["status"] as! Bool)
                     newResident.name = json["fullname"] as! String
                     newResident.id = String(describing: json["id"] as! Int)
                     newResident.photo = json["image_path"] as! String
@@ -171,30 +173,31 @@ struct alamofire{
                             
                             let x = relative["id"] as! Int
                             if x == Constant.user_id{
-                                newResident.isRelative = true
+                                newResident.isRelative = "true"
                             }
                         }
                     }
                     GlobalData.allResidents.append(newResident)
                 }
                 
+                print(" all residents : \(GlobalData.allResidents.count)")
+                
+                GlobalData.relativeList = GlobalData.allResidents.filter({$0.isRelative == "true"})
+                
+                NSKeyedArchiver.archiveRootObject(GlobalData.allResidents, toFile: FilePath.allResidents())
+                NSKeyedArchiver.archiveRootObject(GlobalData.relativeList, toFile: FilePath.relativePath())
+                
                 DispatchQueue.main.async {
                     OperationQueue.main.addOperation {
                         if let loginController = viewController as? LoginController{
                             loginController.performSegue(withIdentifier: "loginSegue", sender: nil)
                         }else if let relativeController = viewController as? RelativeController{
+                            relativeController.relatives = GlobalData.relativeList
                             relativeController.tableView.reloadData()
                             relativeController.refreshControl?.endRefreshing()
                         }
                     }
                 }
-                
-                print(" all residents : \(GlobalData.allResidents.count)")
-                
-                GlobalData.relativeList = GlobalData.allResidents.filter({$0.isRelative == true})
-                
-                NSKeyedArchiver.archiveRootObject(GlobalData.allResidents, toFile: FilePath.allResidents())
-                NSKeyedArchiver.archiveRootObject(GlobalData.relativeList, toFile: FilePath.relativePath())
             }
         }
     }
@@ -228,14 +231,14 @@ struct alamofire{
                             let id = String(describing: json["id"] as! Int)
                             var resident = Resident()
                             if let newMissing = GlobalData.allResidents.first(where: {$0.id == id}){
-                                newMissing.status = true
+                                newMissing.status = "true"
                                 newMissing.report = json["reported_at"] as! String
                                 
                                 resident = newMissing
                             }else{
                                 let newMissing = Resident()
                                 
-                                newMissing.status = true
+                                newMissing.status = "true"
                                 newMissing.name = json["fullname"] as! String
                                 newMissing.id = String(describing: json["id"] as! Int)
                                 newMissing.photo = json["image_path"] as! String
@@ -297,8 +300,6 @@ struct alamofire{
                             GlobalData.allResidents.append(i)
                         }
                     }
-                    
-                    GlobalData.relativeList = GlobalData.allResidents.filter({$0.isRelative == true})
                     
                     if let viewController = viewController as? MissingResidentsController{
                         viewController.residents = GlobalData.missingList

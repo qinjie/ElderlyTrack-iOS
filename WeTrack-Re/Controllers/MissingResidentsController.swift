@@ -32,10 +32,16 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         setupTableView()
         loadUserDefaults()
         loadLocalData()
-        alamofire.loadMissingResidents(viewController: self)
         
+        self.loadMissingResident()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadMissingResident), name: Notification.Name("refreshMissingResident"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncData), name: Notification.Name(rawValue: "sync"), object: nil)
         
+    }
+    
+    @objc private func loadMissingResident(){
+        alamofire.loadMissingResidents(viewController: self)
     }
     
     @objc private func syncData(){

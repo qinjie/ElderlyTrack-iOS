@@ -185,7 +185,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 let newResident = Resident()
                 newResident.name = info[0]
                 newResident.id = info[2]
-                newResident.status = true
+                newResident.status = "true"
                 if resident != nil{
                     newResident.photo = (resident?.photo)!
                 }
@@ -200,16 +200,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 
                 if let user = GlobalData.missingList.filter({$0.id == info[2]}).first{
                     for i in 0...GlobalData.missingList.count-1{
-                        var location = [String:Any]()
-                        location["longitude"] = long
-                        location["latitude"] = lat
-                        location["user_id"] = Int(info[2])
-                        location["beacon_id"] = Int(info[1])
-                        let now = dateFormatter.now(format: "yyyy-MM-dd HH:mm:ss")
-                        location["created_at"] = now
-                        GlobalData.missingList[i].latestLocation = Location(arr: location)
-                        DispatchQueue.main.async {
-                            NotificationCenter.default.post(name: Notification.Name(rawValue: "sync"), object: nil)
+                        if GlobalData.missingList[i].id == user.id{
+                            var location = [String:Any]()
+                            location["longitude"] = long
+                            location["latitude"] = lat
+                            location["user_id"] = Int(info[2])
+                            location["beacon_id"] = Int(info[1])
+                            let now = dateFormatter.now(format: "yyyy-MM-dd HH:mm:ss")
+                            location["created_at"] = now
+                            GlobalData.missingList[i].latestLocation = Location(arr: location)
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "sync"), object: nil)
+                            }
                         }
                     }
                 }

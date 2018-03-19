@@ -42,7 +42,7 @@ class ResidentTableViewCell: UITableViewCell {
         }else{
             self.statusImgView.isHidden = false
         }
-        if resident.status == true{
+        if resident.status == "true"{
             self.statusImgView.image = #imageLiteral(resourceName: "CircleRed")
         }else{
             self.statusImgView.image = #imageLiteral(resourceName: "CircleBlue")

@@ -90,6 +90,14 @@ class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate 
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? UITabBarController{
+            if Constant.username == "Anonymous"{
+                destination.tabBar.items![2].isEnabled = false
+            }
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

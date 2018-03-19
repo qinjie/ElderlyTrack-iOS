@@ -33,10 +33,10 @@ class Resident: NSObject, NSCoding {
     var photo: String = ""
     var nric: String = ""
     var report: String = ""
-    var status: Bool = true
+    var status: String = "true"
     var remark: String = "No report"
     var dob: String = "00"
-    var isRelative: Bool = false
+    var isRelative: String = "false"
     var beacons : [Beacon]?
     var latestLocation : Location?
     var beacon_count = 0
@@ -47,10 +47,10 @@ class Resident: NSObject, NSCoding {
         photo = ""
         nric = ""
         report = ""
-        status = true
+        status = "true"
         remark = "No report"
         dob = "00"
-        isRelative = false
+        isRelative = "false"
         self.beacon_count = 0
     }
     
@@ -60,10 +60,10 @@ class Resident: NSObject, NSCoding {
         photo = aDecoder.decodeObject(forKey: "photo") as? String ?? ""
         nric = aDecoder.decodeObject(forKey: "nric") as? String ?? ""
         report = aDecoder.decodeObject(forKey: "report") as? String ?? ""
-        status = aDecoder.decodeObject(forKey: "status") as? Bool ?? true
+        status = aDecoder.decodeObject(forKey: "status") as? String ?? "true"
         remark = aDecoder.decodeObject(forKey: "remark") as? String ?? ""
         dob = aDecoder.decodeObject(forKey: "dob") as? String ?? ""
-        isRelative = aDecoder.decodeObject(forKey: "isRelative") as? Bool ?? false
+        isRelative = aDecoder.decodeObject(forKey: "isRelative") as? String ?? "false"
         
     }
     
@@ -78,7 +78,6 @@ class Resident: NSObject, NSCoding {
         aCoder.encode(dob, forKey: "dob")
         aCoder.encode(isRelative, forKey: "isRelative")
     }
-    
     
 }
 

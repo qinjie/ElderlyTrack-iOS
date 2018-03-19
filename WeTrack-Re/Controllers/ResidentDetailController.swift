@@ -50,7 +50,7 @@ class ResidentDetailController: UITableViewController {
                 self.switchBtn.isOn = false
                 self.statusLabel.text = "Available"
                 self.statusLabel.textColor = UIColor.mainApp
-                self.resident?.status = false
+                self.resident?.status = "false"
             })
             alertController.addAction(reportAction)
             alertController.addAction(cancelAction)
@@ -84,6 +84,17 @@ class ResidentDetailController: UITableViewController {
         
     }
     
+    func saveRelativeState(){
+        if resident != nil{
+            for i in 0...GlobalData.relativeList.count-1{
+                if GlobalData.relativeList[i].id == resident?.id{
+                    GlobalData.relativeList[i] = resident!
+                }
+            }
+            NSKeyedArchiver.archiveRootObject(GlobalData.relativeList, toFile: FilePath.relativePath())
+        }
+    }
+    
     private func setup(){
         if resident?.photo == nil || resident?.photo == ""{
             imageView.image = #imageLiteral(resourceName: "default_avatar")
@@ -98,7 +109,7 @@ class ResidentDetailController: UITableViewController {
         nameLabel.text = resident?.name
         statusLabel.text = resident?.status.description
         
-        if resident?.status == true{
+        if resident?.status == "true"{
             statusLabel.text = "Missing"
             switchBtn.isOn = true
             status2Label.text = "Missing"
@@ -110,7 +121,7 @@ class ResidentDetailController: UITableViewController {
             status2Label.textColor = UIColor.mainApp
         }
         
-        if !((resident?.isRelative)!){
+        if !((resident?.isRelative == "true")){
             switchBtn.isHidden = true
         }
         

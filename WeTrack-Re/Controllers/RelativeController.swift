@@ -25,11 +25,17 @@ class RelativeController: UITableViewController {
         
         self.relatives = GlobalData.relativeList
         
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshRelative), name: Notification.Name(rawValue: "refreshMissingResident"), object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    @objc private func refreshRelative(){
+        self.relatives = GlobalData.relativeList
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
