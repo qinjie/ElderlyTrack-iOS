@@ -61,7 +61,10 @@ class SettingController: UITableViewController {
     @IBAction func signOutPressed(_ sender: UIButton) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "disableScanning"), object: nil)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: nil)
-        
+        UserDefaults.standard.removeObject(forKey: "email")
+        UserDefaults.standard.removeObject(forKey: "role")
+        UserDefaults.standard.removeObject(forKey: "token")
+        UserDefaults.standard.removeObject(forKey: "user_id")
         alamofire.logout(viewController: self)
     }
     // MARK: - Table view data source

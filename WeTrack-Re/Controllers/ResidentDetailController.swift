@@ -24,6 +24,11 @@ class ResidentDetailController: UITableViewController {
     @IBOutlet weak var beaconBelongLabel: UILabel!
     
     var resident: Resident?
+    var cellTitle = [String]()
+    var cellText = [String]()
+    var beaconsName = [String]()
+    var section:Int?
+    var hideSwitch: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +55,7 @@ class ResidentDetailController: UITableViewController {
                 self.switchBtn.isOn = false
                 self.statusLabel.text = "Available"
                 self.statusLabel.textColor = UIColor.mainApp
-                self.resident?.status = "false"
+                self.resident?.status = false
             })
             alertController.addAction(reportAction)
             alertController.addAction(cancelAction)
@@ -95,7 +100,53 @@ class ResidentDetailController: UITableViewController {
         }
     }
     
-    private func setup(){
+    func setup(){
+        
+        //Register for cell
+        let nib = UINib(nibName: "ResidentDetailCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "cell")
+        
+        cellTitle = ["NRIC","Birthday","Status","Remark"]
+        cellText = [(resident?.nric)!,(resident?.dob)!,resident?.status == true ? "Missing":"Available",(resident?.remark.trimmingCharacters(in: .whitespaces))! == "" ? "No remark":(resident?.remark)!
+            
+        ]
+        
+        var beacon : Beacon?
+        
+        if resident?.latestLocation != nil{
+            addressLabel.text = resident?.latestLocation?.address
+            cellTitle.append("Beacon location")
+            cellText.append((resident?.latestLocation?.address)!)
+            
+            let beacon_id = Int(resident!.latestLocation!.beacon_id)
+            for item in (resident?.beacons)!{
+                if item.id == beacon_id{
+                    beacon = item
+                    break
+                }
+            }
+        }else{
+            addressLabel.text = "No report"
+        }
+        
+        if beacon != nil{
+            cellTitle.append("Beacon detect")
+            cellText.append(beacon!.name!)
+        }
+        
+        if resident?.beacons?.count != 0 {
+            beaconsName.removeAll()
+            section = 2
+            if resident?.beacons != nil{
+                for beacon in (resident?.beacons)!{
+                    let str = beacon.toString()
+                    beaconsName.append(str)
+                }
+            }
+        }else{
+            section = 1
+        }
+        
         if resident?.photo == nil || resident?.photo == ""{
             imageView.image = #imageLiteral(resourceName: "default_avatar")
         }else{
@@ -109,64 +160,21 @@ class ResidentDetailController: UITableViewController {
         nameLabel.text = resident?.name
         statusLabel.text = resident?.status.description
         
-        if resident?.status == "true"{
+        if resident?.status == true{
             statusLabel.text = "Missing"
+            statusLabel.textColor = UIColor.redApp
             switchBtn.isOn = true
-            status2Label.text = "Missing"
-            status2Label.textColor = UIColor.redApp
         }else{
             statusLabel.text = "Available"
+            statusLabel.textColor = UIColor.mainApp
             switchBtn.isOn = false
-            status2Label.text = "Available"
-            status2Label.textColor = UIColor.mainApp
         }
         
-        if !((resident?.isRelative == "true")){
+        if hideSwitch{
             switchBtn.isHidden = true
-        }
-        
-        var beacon : Beacon?
-        
-        if resident?.latestLocation != nil{
-            addressLabel.text = resident?.latestLocation?.address
-            beaconLocationLabel.text = resident?.latestLocation?.address
-            
-            let beacon_id = Int(resident!.latestLocation!.beacon_id)
-            for item in (resident?.beacons)!{
-                if item.id == beacon_id{
-                    beacon = item
-                    break
-                }
-            }
         }else{
-            beaconLocationLabel.text = "Unknown"
+            switchBtn.isHidden = false
         }
-        
-        if resident?.beacons?.count == 0 {
-            beaconBelongLabel.text = "No beacon"
-            beaconBelongLabel.textColor = UIColor.yellowApp
-        }else{
-            var text = ""
-            if resident?.beacons != nil{
-                for beacon in (resident?.beacons)!{
-                    let str = beacon.toString()
-                    text = text + " - " + str + "\n"
-                }
-                beaconBelongLabel.text = text
-                beaconBelongLabel.textColor = UIColor.black
-            }
-        }
-        
-        if beacon != nil{
-            beaconDetectLabel.text = beacon!.name
-        }else{
-            beaconDetectLabel.text = "Unknown"
-        }
-        
-        nricLabel.text = resident?.nric
-        dobLabel.text = resident?.dob
-        remarkLabel.text = resident?.remark
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -178,16 +186,63 @@ class ResidentDetailController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return section ?? 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0{
+            return cellTitle.count
+        }else{
+            return beaconsName.count
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0{
+            return "ABOUT RESIDENT"
+        }else{
+            return "BEACONS LIST"
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResidentDetailCell
+        
+        if indexPath.section == 0{
+            switch cellText[indexPath.row]{
+            case "Missing":
+                cell.cellText.textColor = UIColor.redApp
+                break
+            case "Available":
+                cell.cellText.textColor = UIColor.mainApp
+            default:
+                cell.cellText.textColor = UIColor.black
+            }
+            
+            if cellText[indexPath.row] != "" && cellTitle[indexPath.row] == "Remark"{
+                cell.cellText.textColor = UIColor.redApp
+            }
+            
+            if cellText[indexPath.row] == "No remark"{
+                cell.cellText.textColor = UIColor.gray
+            }
+            
+            cell.setData(title: cellTitle[indexPath.row], text: cellText[indexPath.row])
+        }else{
+            cell.setData(title: String(describing:"Beacon: "+String(describing:indexPath.row+1)), text: beaconsName[indexPath.row])
+        }
+        
 
         // Configure the cell...
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

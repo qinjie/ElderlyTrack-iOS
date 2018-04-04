@@ -30,4 +30,9 @@ struct FilePath{
         return dir!.appendingPathComponent("offlinelocations.txt").path
     }
     
+    static func beaconList() -> String{
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return dir!.appendingPathComponent("beaconList.txt").path
+    }
+    
 }

@@ -9,22 +9,78 @@
 import Foundation
 import SwiftyJSON
 
-class Beacon {
+class Beacon: NSObject, NSCoding {
     
-    var detect: Bool = true
-    var id: Int = 0
-    var major: Int32 = 0
-    var minor: Int32 = 0
-    var name: String = ""
-    var photopath: String = ""
-    var resident_id: Int = 0
-    var report: String = ""
-    var status: Bool = true
-    var uuid: String = ""
+    var detect: Bool?
+    var id: Int?
+    var major: Int32?
+    var minor: Int32?
+    var name: String?
+    var photopath: String?
+    var resident_id: Int?
+    var report: String?
+    var status: Bool?
+    var uuid: String?
     
     func toString() -> String{
-        return "ID: \(id) | Major: \(major) | Minor : \(minor)"
+        return "ID: \(String(describing: id!)) | Major: \(String(describing: major!)) | Minor : \(String(describing: minor!))"
     }
+    
+    override init(){
+        detect = true
+        id = 0
+        major = 0
+        minor = 0
+        name = ""
+        photopath = ""
+        resident_id = 0
+        report = ""
+        status = true
+        uuid = ""
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(String(describing:detect), forKey: "detect")
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(major, forKey: "major")
+        aCoder.encode(minor, forKey: "minor")
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(photopath, forKey: "photopath")
+        aCoder.encode(resident_id, forKey: "resident_id")
+        aCoder.encode(report, forKey: "report")
+        aCoder.encode(String(describing:status), forKey: "status")
+        aCoder.encode(uuid, forKey: "uuid")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        if let check = aDecoder.decodeObject(forKey: "detect") as? String{
+            switch check.trimmingCharacters(in: .whitespaces){
+            case "true":
+                detect =  true
+                break
+            default:
+                detect = false
+            }
+        }
+        id = (aDecoder.decodeObject(forKey: "id") as? Int)!
+        major = (aDecoder.decodeObject(forKey: "major") as? Int32)!
+        minor = (aDecoder.decodeObject(forKey: "minor") as? Int32)!
+        name = (aDecoder.decodeObject(forKey: "name") as? String)!
+        photopath = (aDecoder.decodeObject(forKey: "photopath") as? String)!
+        resident_id = aDecoder.decodeObject(forKey: "resident_id") as! Int
+        report = aDecoder.decodeObject(forKey: "report") as! String
+        if let check = aDecoder.decodeObject(forKey: "status") as? String{
+            switch check.trimmingCharacters(in: .whitespaces){
+            case "true":
+                status =  true
+                break
+            default:
+                status = false
+            }
+        }
+        uuid = aDecoder.decodeObject(forKey: "uuid") as! String
+    }
+    
 }
 
 class Resident: NSObject, NSCoding {
@@ -33,10 +89,10 @@ class Resident: NSObject, NSCoding {
     var photo: String = ""
     var nric: String = ""
     var report: String = ""
-    var status: String = "true"
+    var status: Bool = true
     var remark: String = "No report"
     var dob: String = "00"
-    var isRelative: String = "false"
+    var isRelative: Bool = false
     var beacons : [Beacon]?
     var latestLocation : Location?
     var beacon_count = 0
@@ -47,10 +103,10 @@ class Resident: NSObject, NSCoding {
         photo = ""
         nric = ""
         report = ""
-        status = "true"
+        status = true
         remark = "No report"
         dob = "00"
-        isRelative = "false"
+        isRelative = false
         self.beacon_count = 0
     }
     
@@ -60,10 +116,26 @@ class Resident: NSObject, NSCoding {
         photo = aDecoder.decodeObject(forKey: "photo") as? String ?? ""
         nric = aDecoder.decodeObject(forKey: "nric") as? String ?? ""
         report = aDecoder.decodeObject(forKey: "report") as? String ?? ""
-        status = aDecoder.decodeObject(forKey: "status") as? String ?? "true"
+        if let check = aDecoder.decodeObject(forKey: "status") as? String{
+            switch check.lowercased(){
+            case "true":
+                status = true
+                break
+            default:
+                status = false
+            }
+        }
         remark = aDecoder.decodeObject(forKey: "remark") as? String ?? ""
         dob = aDecoder.decodeObject(forKey: "dob") as? String ?? ""
-        isRelative = aDecoder.decodeObject(forKey: "isRelative") as? String ?? "false"
+        if let check = aDecoder.decodeObject(forKey: "isRelative") as? String{
+            switch check.lowercased(){
+            case "true":
+                isRelative = true
+                break
+            default:
+                isRelative = false
+            }
+        }
         
     }
     
@@ -73,10 +145,10 @@ class Resident: NSObject, NSCoding {
         aCoder.encode(photo, forKey: "photo")
         aCoder.encode(nric, forKey: "nric")
         aCoder.encode(report, forKey: "report")
-        aCoder.encode(status, forKey: "status")
+        aCoder.encode(String(describing: status), forKey: "status")
         aCoder.encode(remark, forKey: "remark")
         aCoder.encode(dob, forKey: "dob")
-        aCoder.encode(isRelative, forKey: "isRelative")
+        aCoder.encode(String(describing:isRelative), forKey: "isRelative")
     }
     
 }

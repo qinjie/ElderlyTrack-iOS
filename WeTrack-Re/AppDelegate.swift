@@ -174,22 +174,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 notification.presentNotification(title: "Beacon detected", body: "\(info[0]) is nearby.", timeInterval: 1, repeats: false, identifier: info[0])
             }
             
-            let beacon = GlobalData.beaconList.first(where: {$0.id.description == info[1]})
+            let beacon = GlobalData.beaconList.first(where: {$0.id?.description == info[1]})
             let resident = GlobalData.allResidents.first(where: {$0.id.description == info[2]})
             if beacon != nil && resident != nil{
                 resident?.report = now
                 beacon?.report = now
             }
             
-            if !GlobalData.nearMe.contains(where: {$0.id.description == info[2]}){
-                let newResident = Resident()
-                newResident.name = info[0]
-                newResident.id = info[2]
-                newResident.status = "true"
-                if resident != nil{
-                    newResident.photo = (resident?.photo)!
-                }
-                GlobalData.nearMe.append(newResident)
+            if !GlobalData.nearMe.contains(where: {$0.id == beacon?.id}){
+                GlobalData.nearMe.append(beacon!)
             }
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateHistory"), object: nil)
@@ -239,7 +232,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if region is CLBeaconRegion{
             let info = region.identifier.components(separatedBy: "#")
-            GlobalData.nearMe = GlobalData.nearMe.filter({$0.id.description != info[2]})
+            GlobalData.nearMe = GlobalData.nearMe.filter({$0.id?.description != info[2]})
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateHistory"), object: nil)
         }
     }

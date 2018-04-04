@@ -44,7 +44,7 @@ class RelativeController: UITableViewController {
     }
     
     @objc private func reloadData(){
-        alamofire.loadRelativeList(viewController: self)
+        alamofire.loadMissingResidents(viewController: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,7 +53,7 @@ class RelativeController: UITableViewController {
             let relative = relatives?[indexPath.item]
             
             let detailPage = segue.destination as! ResidentDetailController
-            detailPage.resident = relative!
+            detailPage.resident = GlobalData.allResidents.filter({$0.id == relative?.id}).first!
             
         }
     }

@@ -25,6 +25,9 @@
 		E1486BDE2047CFA300BB9245 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1486BDC2047CFA300BB9245 /* Main.storyboard */; };
 		E1486BE02047CFA300BB9245 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1486BDF2047CFA300BB9245 /* Assets.xcassets */; };
 		E1486BE32047CFA300BB9245 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1486BE12047CFA300BB9245 /* LaunchScreen.storyboard */; };
+		E153F48A2074CA0F00C69576 /* NearbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E153F4882074CA0F00C69576 /* NearbyCell.swift */; };
+		E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E153F4892074CA0F00C69576 /* NearbyCell.xib */; };
+		E17E041D20727BD800B16C09 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17E041C20727BD800B16C09 /* CustomTabBarController.swift */; };
 		E18A2D9D204EB08A0022AB08 /* MissingResidentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */; };
 		E1AEC91F2048439000868F10 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC91E2048439000868F10 /* Item.swift */; };
 		E1AEC9212048478100868F10 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC9202048478100868F10 /* Functions.swift */; };
@@ -43,6 +46,9 @@
 		E1DAA3F1204FB6C2004BF193 /* NearMeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F0204FB6C2004BF193 /* NearMeController.swift */; };
 		E1DAA3F4204FD934004BF193 /* RelativeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F3204FD934004BF193 /* RelativeController.swift */; };
 		E1DAA3F6204FE2C5004BF193 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F5204FE2C5004BF193 /* SettingController.swift */; };
+		E1E421562073CA5C00A90208 /* ResidentDetailAnonumousController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */; };
+		E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F410542074823C00B39074 /* ResidentDetailCell.swift */; };
+		E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F410552074823C00B39074 /* ResidentDetailCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +72,9 @@
 		E1486BDF2047CFA300BB9245 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1486BE22047CFA300BB9245 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1486BE42047CFA300BB9245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E153F4882074CA0F00C69576 /* NearbyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyCell.swift; sourceTree = "<group>"; };
+		E153F4892074CA0F00C69576 /* NearbyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NearbyCell.xib; sourceTree = "<group>"; };
+		E17E041C20727BD800B16C09 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingResidentsController.swift; sourceTree = "<group>"; };
 		E1AEC91E2048439000868F10 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E1AEC9202048478100868F10 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
@@ -84,6 +93,9 @@
 		E1DAA3F0204FB6C2004BF193 /* NearMeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeController.swift; sourceTree = "<group>"; };
 		E1DAA3F3204FD934004BF193 /* RelativeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeController.swift; sourceTree = "<group>"; };
 		E1DAA3F5204FE2C5004BF193 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailAnonumousController.swift; sourceTree = "<group>"; };
+		E1F410542074823C00B39074 /* ResidentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailCell.swift; sourceTree = "<group>"; };
+		E1F410552074823C00B39074 /* ResidentDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResidentDetailCell.xib; sourceTree = "<group>"; };
 		EF73D33E6884A423B2C9FF71 /* Pods_WeTrack_Re.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeTrack_Re.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC62D86241599A95C9AB8BB /* Pods-WeTrack-Re.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeTrack-Re.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeTrack-Re/Pods-WeTrack-Re.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +120,7 @@
 				E1DAA3F0204FB6C2004BF193 /* NearMeController.swift */,
 				E1DAA3F3204FD934004BF193 /* RelativeController.swift */,
 				E1112793205390DE005F957C /* ResidentDetailController.swift */,
+				E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */,
 				E1DAA3F5204FE2C5004BF193 /* SettingController.swift */,
 				E11127A020541179005F957C /* FAQController.swift */,
 				E11127A220542447005F957C /* AboutController.swift */,
@@ -165,6 +178,7 @@
 				E1DAA3EE204FA86D004BF193 /* UIViewExtensions.swift */,
 				E12E9844204FEEF800A6A7F7 /* UIColorExtensions.swift */,
 				E111279520539648005F957C /* ViewControllerExtensions.swift */,
+				E17E041C20727BD800B16C09 /* CustomTabBarController.swift */,
 				E1CC024A2054C86C00F82ED6 /* about.html */,
 				E1CC024C2054C86D00F82ED6 /* about.png */,
 				E1CC024B2054C86D00F82ED6 /* checkmark.png */,
@@ -181,6 +195,10 @@
 				E1BC99FE204D66BD0079B455 /* ResidentTableViewCell.xib */,
 				E11127972053FE99005F957C /* FAQTableViewCell.swift */,
 				E11127982053FE99005F957C /* FAQTableViewCell.xib */,
+				E1F410542074823C00B39074 /* ResidentDetailCell.swift */,
+				E1F410552074823C00B39074 /* ResidentDetailCell.xib */,
+				E153F4882074CA0F00C69576 /* NearbyCell.swift */,
+				E153F4892074CA0F00C69576 /* NearbyCell.xib */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -277,9 +295,11 @@
 				E1486BE02047CFA300BB9245 /* Assets.xcassets in Resources */,
 				E1C81C3420497D19005A5B51 /* GoogleService-Info.plist in Resources */,
 				E1CC024F2054C86D00F82ED6 /* about.png in Resources */,
+				E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */,
 				E1CC02572054CAA500F82ED6 /* developer_credit.png in Resources */,
 				E1CC02512054C96D00F82ED6 /* css in Resources */,
 				E111279A2053FE99005F957C /* FAQTableViewCell.xib in Resources */,
+				E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */,
 				E111279E20540F60005F957C /* faqs.json in Resources */,
 				E1486BDE2047CFA300BB9245 /* Main.storyboard in Resources */,
 				E1CC02562054CAA500F82ED6 /* human_credit.png in Resources */,
@@ -373,11 +393,14 @@
 				E111279620539648005F957C /* ViewControllerExtensions.swift in Sources */,
 				E143369B20490A0100BF74E4 /* Model.swift in Sources */,
 				E1112794205390DE005F957C /* ResidentDetailController.swift in Sources */,
+				E153F48A2074CA0F00C69576 /* NearbyCell.swift in Sources */,
 				E12E9845204FEEF800A6A7F7 /* UIColorExtensions.swift in Sources */,
 				E111279C205400E7005F957C /* FAQ.swift in Sources */,
 				E1486BDB2047CFA300BB9245 /* LoginController.swift in Sources */,
 				E1DAA3F4204FD934004BF193 /* RelativeController.swift in Sources */,
+				E17E041D20727BD800B16C09 /* CustomTabBarController.swift in Sources */,
 				E11127A120541179005F957C /* FAQController.swift in Sources */,
+				E1E421562073CA5C00A90208 /* ResidentDetailAnonumousController.swift in Sources */,
 				E143369D2049164F00BF74E4 /* FilePath.swift in Sources */,
 				E1DAA3F1204FB6C2004BF193 /* NearMeController.swift in Sources */,
 				E1AEC91F2048439000868F10 /* Item.swift in Sources */,
@@ -387,6 +410,7 @@
 				E1AEC9212048478100868F10 /* Functions.swift in Sources */,
 				E1DAA3EF204FA86D004BF193 /* UIViewExtensions.swift in Sources */,
 				E11127A320542447005F957C /* AboutController.swift in Sources */,
+				E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */,
 				E11EC7D52054F6FB00E30DA1 /* Reachability.swift in Sources */,
 				E1BC99FF204D66BD0079B455 /* ResidentTableViewCell.swift in Sources */,
 			);

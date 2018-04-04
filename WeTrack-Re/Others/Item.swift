@@ -34,12 +34,13 @@ struct Constant{
 }
 
 struct GlobalData{
+    static var distinctUUID = [String]()
     static var residentStatus = [String:String]()
     static var missingList = [Resident]()
     static var allResidents = [Resident]()
     static var relativeList = [Resident]()
     static var history = [Beacon]()
-    static var nearMe = [Resident]()
+    static var nearMe = [Beacon]()
     static var offlineData = [LocationHistory]()
     
     static var beaconList = [Beacon]()

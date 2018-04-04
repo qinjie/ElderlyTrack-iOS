@@ -33,6 +33,8 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         loadUserDefaults()
         loadLocalData()
         
+        alamofire.loadDistinctUUID(controller: self)
+        
         self.loadMissingResident()
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadMissingResident), name: Notification.Name("refreshMissingResident"), object: nil)
@@ -100,6 +102,10 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
                 
             }
             
+            if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.beaconList()) as? [Beacon]{
+                GlobalData.beaconList = dict
+            }
+            
         }
         
     }
@@ -122,6 +128,21 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
             GlobalData.currentRegionList = newRegionList
             startMonitor()
             
+        }
+        
+    }
+    
+    @objc func startMonitorCommon(){
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        
+        if GlobalData.distinctUUID.count <= 20 && GlobalData.distinctUUID.count>0{
+            for i in 0...GlobalData.distinctUUID.count-1{
+                let uuid = NSUUID(uuidString: GlobalData.distinctUUID[i])! as UUID
+                let commonRegion = CLBeaconRegion(proximityUUID: uuid, identifier: String(describing:i))
+                self.locationManager.startMonitoring(for: commonRegion)
+            }
         }
         
     }
@@ -177,7 +198,11 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "detailSegue", sender: residents?[indexPath.item])
+        if (residents?[indexPath.item].isRelative)!{
+            self.performSegue(withIdentifier: "detailSegue", sender: residents?[indexPath.item])
+        }else{
+            self.performSegue(withIdentifier: "detailAnonymousSegue", sender: residents?[indexPath.item])
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -219,7 +244,11 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let resident = sender as? Resident{
             if let detailController = segue.destination as? ResidentDetailController{
+                detailController.hideSwitch = true
                 detailController.resident = resident
+            }
+            if let detailAnonumous = segue.destination as? ResidentDetailAnonumousController{
+                detailAnonumous.resident = resident
             }
         }
     }

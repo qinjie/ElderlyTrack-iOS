@@ -72,6 +72,14 @@ struct alamofire{
         }
     }
     
+    static func loadDistinctUUID(controller: UIViewController){
+        
+        
+        //start monitoring
+        if let missingController = controller as? MissingResidentsController{
+            missingController.startMonitorCommon()
+        }
+    }
     
     static func reportMissingResident(resident: Resident, remark: String, viewController: UIViewController){
         
@@ -79,7 +87,7 @@ struct alamofire{
         
         let parameters: [String:Any] = [
             "id" : resident.id,
-            "remark" : remark
+            "remark" : remark == "" ? " ":remark
         ]
         let headers: HTTPHeaders = [
             "Authorization" : "Bearer " + Constant.token
@@ -95,14 +103,14 @@ struct alamofire{
                 if let controller = viewController as? ResidentDetailController{
                     if controller.switchBtn.isOn{
                         controller.resident?.remark = remark
-                        controller.remarkLabel.text = remark
-                        controller.statusLabel.text = "Missing"
-                        controller.statusLabel.textColor = UIColor.redApp
-                        controller.resident?.status = "true"
+                        controller.resident?.status = true
+                        controller.setup()
+                        controller.tableView.reloadData()
                     }else{
-                        controller.statusLabel.text = "Available"
-                        controller.resident?.status = "false"
-                        
+                        controller.resident?.status = false
+                        controller.resident?.remark = ""
+                        controller.setup()
+                        controller.tableView.reloadData()
                     }
                     controller.saveRelativeState()
                     NotificationCenter.default.post(name: Notification.Name("refreshMissingResident"), object: nil)
@@ -152,7 +160,7 @@ struct alamofire{
                     
                     let newResident = Resident()
                     
-                    newResident.status = String(json["status"] as! Bool)
+                    newResident.status = json["status"] as! Bool
                     newResident.name = json["fullname"] as! String
                     newResident.id = String(describing: json["id"] as! Int)
                     newResident.photo = json["image_path"] as! String
@@ -173,7 +181,7 @@ struct alamofire{
                             
                             let x = relative["id"] as! Int
                             if x == Constant.user_id{
-                                newResident.isRelative = "true"
+                                newResident.isRelative = true
                             }
                         }
                     }
@@ -182,7 +190,7 @@ struct alamofire{
                 
                 print(" all residents : \(GlobalData.allResidents.count)")
                 
-                GlobalData.relativeList = GlobalData.allResidents.filter({$0.isRelative == "true"})
+                GlobalData.relativeList = GlobalData.allResidents.filter({$0.isRelative == true})
                 
                 NSKeyedArchiver.archiveRootObject(GlobalData.allResidents, toFile: FilePath.allResidents())
                 NSKeyedArchiver.archiveRootObject(GlobalData.relativeList, toFile: FilePath.relativePath())
@@ -231,14 +239,14 @@ struct alamofire{
                             let id = String(describing: json["id"] as! Int)
                             var resident = Resident()
                             if let newMissing = GlobalData.allResidents.first(where: {$0.id == id}){
-                                newMissing.status = "true"
+                                newMissing.status = true
                                 newMissing.report = json["reported_at"] as! String
                                 
                                 resident = newMissing
                             }else{
                                 let newMissing = Resident()
                                 
-                                newMissing.status = "true"
+                                newMissing.status = true
                                 newMissing.name = json["fullname"] as! String
                                 newMissing.id = String(describing: json["id"] as! Int)
                                 newMissing.photo = json["image_path"] as! String
@@ -262,12 +270,12 @@ struct alamofire{
                                     newBeacon.resident_id = Int(resident.id)!
                                     newBeacon.status = beacon["status"] as! Bool
                                     
-                                    if newBeacon.status.hashValue != 0 {
-                                        newBeacon.name = resident.name + "#" + String(newBeacon.id) + "#" + String(resident.id)
+                                    if newBeacon.status?.hashValue != 0 {
+                                        newBeacon.name = resident.name + "#" + String(describing: newBeacon.id) + "#" + String(resident.id)
                                         print("** NAME \(newBeacon.name)")
                                         if let viewController = viewController as? MissingResidentsController{
-                                            let uuid = NSUUID(uuidString: newBeacon.uuid)! as UUID
-                                            let newRegion = CLBeaconRegion(proximityUUID: uuid, major: UInt16(newBeacon.major), minor: UInt16(newBeacon.minor), identifier: newBeacon.name)
+                                            let uuid = NSUUID(uuidString: newBeacon.uuid!)! as UUID
+                                            let newRegion = CLBeaconRegion(proximityUUID: uuid, major: UInt16(newBeacon.major!), minor: UInt16(newBeacon.minor!), identifier: newBeacon.name!)
                                             viewController.newRegionList.append(newRegion)
                                         }
                                         GlobalData.beaconList.append(newBeacon)
@@ -275,6 +283,7 @@ struct alamofire{
                                     tempBeacon.append(newBeacon)
                                     
                                 }
+                                NSKeyedArchiver.archiveRootObject(GlobalData.beaconList, toFile: FilePath.beaconList())
                                 resident.beacons = tempBeacon
                             }
                             
