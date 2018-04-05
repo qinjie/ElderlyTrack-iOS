@@ -9,7 +9,6 @@
 import UserNotifications
 import Foundation
 import Alamofire
-import GoogleSignIn
 import CoreLocation
 import SwiftyJSON
 
@@ -46,7 +45,7 @@ struct alamofire{
                     }
                     viewController.displayAlert(title: "Login Failed", message: "This function can only be used by registered user. You can go to nearest police station for registration or use Anonymous login!")
                  
-                    GIDSignIn.sharedInstance().signOut()
+                    //GIDSignIn.sharedInstance().signOut()
                 }
             }
             else{
@@ -349,7 +348,7 @@ struct alamofire{
                         appDelegate.resetAppToFirstController()
                         
                         if Constant.role != 5{
-                            GIDSignIn.sharedInstance().signOut()
+                            //GIDSignIn.sharedInstance().signOut()
                         }
                     }else{
                         viewController.displayAlert(title: "No internet connection", message: "Please check your internet connection.")

@@ -8,12 +8,11 @@
 
 import UIKit
 import Alamofire
-import Firebase
-import FirebaseAuth
-import GoogleSignIn
 import UserNotifications
+import AWSAuthUI
+import AWSAuthCore
 
-class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
+class LoginController: UIViewController {
     
     let alertController = UIAlertController(title: nil, message: "Please wait...\n\n", preferredStyle: .alert)
     let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -22,9 +21,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate 
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().delegate = self
-        
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.blue
         alertController.view.addSubview(spinnerIndicator)
@@ -32,11 +28,10 @@ class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults.standard.string(forKey: "device_token") == nil{
-            spinnerIndicator.startAnimating()
-            self.present(alertController, animated: true, completion: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(tokenRefreshed), name: Notification.Name.InstanceIDTokenRefresh, object: nil)
-        }
+//        if UserDefaults.standard.string(forKey: "device_token") == nil{
+//            spinnerIndicator.startAnimating()
+//            self.present(alertController, animated: true, completion: nil)
+//        }
     }
     
     @objc func tokenRefreshed(){
@@ -57,38 +52,49 @@ class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate 
     }
     
     @IBAction func LoginGoogle(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().signIn()
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        
-        spinnerIndicator.startAnimating()
-        
-        if let error = error{
-            print("Failed to log into Google: ", error)
-            return
-        }else{
-            self.present(alertController, animated: true, completion: nil)
-            print("Successfully log into Google", user)
-            guard let idToken = user.authentication.idToken else {return}
-            guard let accessToken = user.authentication.accessToken else {return}
-            let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-            Auth.auth().signIn(with: credentials, completion: { (user, error) in
-                if let error = error{
-                    print("Failed to create a Firebase User with Google account: ", error)
-                    return
-                }else{
-                    guard let uid = user?.uid else {return}
-                    print("user email login \(user?.email)")
-                    
-                    Constant.userphoto = user?.photoURL
-                    
-                    alamofire.loginWithEmail(email: (user?.email)!,viewController: self)
-                }
-            })
-            
+        if !AWSSignInManager.sharedInstance().isLoggedIn {
+            AWSAuthUIViewController
+                .presentViewController(with: self.navigationController!,
+                                       configuration: nil,
+                                       completionHandler: { (provider: AWSSignInProvider, error: Error?) in
+                                        if error != nil {
+                                            print("Error occurred: \(String(describing: error))")
+                                        } else {
+                                            // Sign in successful.
+                                        }
+                })
         }
     }
+    
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+//        
+//        spinnerIndicator.startAnimating()
+//        
+//        if let error = error{
+//            print("Failed to log into Google: ", error)
+//            return
+//        }else{
+//            self.present(alertController, animated: true, completion: nil)
+//            print("Successfully log into Google", user)
+//            guard let idToken = user.authentication.idToken else {return}
+//            guard let accessToken = user.authentication.accessToken else {return}
+//            let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+//            Auth.auth().signIn(with: credentials, completion: { (user, error) in
+//                if let error = error{
+//                    print("Failed to create a Firebase User with Google account: ", error)
+//                    return
+//                }else{
+//                    guard let uid = user?.uid else {return}
+//                    print("user email login \(user?.email)")
+//                    
+//                    Constant.userphoto = user?.photoURL
+//                    
+//                    alamofire.loginWithEmail(email: (user?.email)!,viewController: self)
+//                }
+//            })
+//            
+//        }
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? UITabBarController{

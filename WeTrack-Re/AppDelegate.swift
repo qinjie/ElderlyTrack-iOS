@@ -7,15 +7,15 @@
 //
 
 import UIKit
-import Firebase
-import GoogleSignIn
-import FirebaseMessaging
 import UserNotifications
 import CoreLocation
+import AWSMobileClient
+import AWSPinpoint
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate {
     
+    var pinpoint: AWSPinpoint?
     var window: UIWindow?
     var locationManager : CLLocationManager!
     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -25,13 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
+        AWSDDLog.sharedInstance.logLevel = .info
+        
+        pinpoint = AWSPinpoint(configuration: AWSPinpointConfiguration.defaultPinpointConfiguration(launchOptions: launchOptions))
+        
         if let email = UserDefaults.standard.string(forKey: "email"){
             Constant.email = email
         }
         UIApplication.shared.statusBarStyle = .lightContent
         
         if UserDefaults.standard.string(forKey: "token") == nil {
-            let loginController = mainStoryboard.instantiateViewController(withIdentifier: "Login") as! LoginController
+            let loginController = mainStoryboard.instantiateViewController(withIdentifier: "Login") as! UINavigationController
             self.window?.rootViewController = loginController
         }else{
             let residentController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
@@ -50,6 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             if success{
                 print("granted noti")
                 UserDefaults.standard.set(true, forKey: "notification")
+                
+                DispatchQueue.main.async {
+                    var userNotificationTypes : UIUserNotificationType
+                    userNotificationTypes = [.alert, .badge, .sound]
+                    let notificaitonSettings = UIUserNotificationSettings.init(types: userNotificationTypes, categories: nil)
+                    UIApplication.shared.registerUserNotificationSettings(notificaitonSettings)
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
             }else{
                 print("denied noti")
                 UserDefaults.standard.set(false, forKey: "notification")
@@ -58,36 +71,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(notification:)), name: ReachabilityChangedNotification, object: nil)
         
-        FirebaseApp.configure()
-        
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         
         application.registerForRemoteNotifications()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(tokenRefreshNotification(notification:)), name: Notification.Name.InstanceIDTokenRefresh, object: nil)
+        print("pinpoint: " + String(describing: pinpoint?.targetingClient.currentEndpointProfile()))
         
-        return true
+        return AWSMobileClient.sharedInstance().interceptApplication(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return AWSMobileClient.sharedInstance().interceptApplication(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        InstanceID.instanceID().setAPNSToken(deviceToken as Data, type: InstanceIDAPNSTokenType.sandbox)
-        let characterSet = CharacterSet(charactersIn: "<>")
-        let deviceTokenString = deviceToken.description.trimmingCharacters(in: characterSet).replacingOccurrences(of: " ", with: "");
-        NSLog("deviceToken",deviceTokenString)
-        let device_token = UserDefaults.standard.value(forKey: "devicetoken")
-        if (device_token == nil) {
-            UserDefaults.standard.set(deviceTokenString, forKey: "devicetoken")
-        }
+        
+        pinpoint!.notificationManager.interceptDidRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        
     }
     
-    @objc func tokenRefreshNotification(notification: NSNotification){
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        pinpoint!.notificationManager.interceptDidReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
         
-        let refreshedToken = InstanceID.instanceID().token()
-        print("InstanceID token: \(String(describing: refreshedToken))")
-        
-        UserDefaults.standard.set(refreshedToken, forKey: "device_token")
-        
-        
+        if (application.applicationState == .active){
+            let alert = UIAlertController(title: "Notification Received", message: userInfo.description, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -114,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func resetAppToFirstController() {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginController: LoginController? = (mainStoryboard.instantiateViewController(withIdentifier: "Login") as? LoginController)
+        let loginController = (mainStoryboard.instantiateViewController(withIdentifier: "Login") as? UINavigationController)
         self.window?.rootViewController = loginController
     }
     
