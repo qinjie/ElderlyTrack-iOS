@@ -33,9 +33,8 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         loadUserDefaults()
         loadLocalData()
         
-        alamofire.loadDistinctUUID(controller: self)
-        
         self.loadMissingResident()
+        api.loadDistinctUUID(controller: self)
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadMissingResident), name: Notification.Name("refreshMissingResident"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncData), name: Notification.Name(rawValue: "sync"), object: nil)
@@ -43,7 +42,7 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     }
     
     @objc private func loadMissingResident(){
-        alamofire.loadMissingResidents(viewController: self)
+        api.loadMissingResidents(controller: self)
     }
     
     @objc private func syncData(){
@@ -66,7 +65,8 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     @objc func reloadData(){
         
         Timer.after(1) {
-            alamofire.loadMissingResidents(viewController: self)
+            api.loadMissingResidents(controller: self)
+            api.loadDistinctUUID(controller: self)
         }
         
     }
@@ -82,7 +82,7 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         Constant.username = UserDefaults.standard.string(forKey: "username")!
         Constant.user_id = UserDefaults.standard.integer(forKey: "user_id")
         Constant.role = UserDefaults.standard.integer(forKey: "role")
-        Constant.token = UserDefaults.standard.string(forKey: "token")!
+        //Constant.token = UserDefaults.standard.string(forKey: "token")!
         
     }
     
@@ -104,6 +104,10 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
             
             if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.beaconList()) as? [Beacon]{
                 GlobalData.beaconList = dict
+            }
+            
+            if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.distinctBeacon()) as? [Beacon]{
+                GlobalData.distinctBeacons = dict
             }
             
         }
@@ -130,6 +134,12 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
             
         }
         
+        if GlobalData.distinctBeacons.count > 0{
+            
+            startMonitorCommon()
+            
+        }
+        
     }
     
     @objc func startMonitorCommon(){
@@ -137,10 +147,11 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        if GlobalData.distinctUUID.count <= 20 && GlobalData.distinctUUID.count>0{
-            for i in 0...GlobalData.distinctUUID.count-1{
-                let uuid = NSUUID(uuidString: GlobalData.distinctUUID[i])! as UUID
-                let commonRegion = CLBeaconRegion(proximityUUID: uuid, identifier: String(describing:i))
+        if GlobalData.distinctBeacons.count <= 20{
+            for i in 0...GlobalData.distinctBeacons.count-1{
+                let uuid = NSUUID(uuidString: GlobalData.distinctBeacons[i].uuid!)! as UUID
+                let identifier = GlobalData.distinctBeacons[i].identifier
+                let commonRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifier!)
                 self.locationManager.startMonitoring(for: commonRegion)
             }
         }

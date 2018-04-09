@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyTimer
 
 class RelativeController: UITableViewController {
     
@@ -44,7 +45,9 @@ class RelativeController: UITableViewController {
     }
     
     @objc private func reloadData(){
-        alamofire.loadMissingResidents(viewController: self)
+        Timer.after(1) {
+            api.loadRelative(controller: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,6 +56,7 @@ class RelativeController: UITableViewController {
             let relative = relatives?[indexPath.item]
             
             let detailPage = segue.destination as! ResidentDetailController
+            detailPage.toggleSwitch = true
             detailPage.resident = GlobalData.allResidents.filter({$0.id == relative?.id}).first!
             
         }
@@ -119,16 +123,6 @@ class RelativeController: UITableViewController {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
     */
 

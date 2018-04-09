@@ -19,11 +19,12 @@ class Beacon: NSObject, NSCoding {
     var photopath: String?
     var resident_id: Int?
     var report: String?
-    var status: Bool?
+    var status: Int?
     var uuid: String?
+    var identifier: String?
     
     func toString() -> String{
-        return "ID: \(String(describing: id!)) | Major: \(String(describing: major!)) | Minor : \(String(describing: minor!))"
+        return "ID: \(String(describing: id!)) | \(String(describing: major!)) | \(String(describing: minor!))"
     }
     
     override init(){
@@ -35,8 +36,9 @@ class Beacon: NSObject, NSCoding {
         photopath = ""
         resident_id = 0
         report = ""
-        status = true
+        status = 0
         uuid = ""
+        identifier = ""
     }
     
     func encode(with aCoder: NSCoder) {
@@ -48,8 +50,9 @@ class Beacon: NSObject, NSCoding {
         aCoder.encode(photopath, forKey: "photopath")
         aCoder.encode(resident_id, forKey: "resident_id")
         aCoder.encode(report, forKey: "report")
-        aCoder.encode(String(describing:status), forKey: "status")
+        aCoder.encode(status, forKey: "status")
         aCoder.encode(uuid, forKey: "uuid")
+        aCoder.encode(identifier, forKey: "identifier")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,18 +70,11 @@ class Beacon: NSObject, NSCoding {
         minor = (aDecoder.decodeObject(forKey: "minor") as? Int32)!
         name = (aDecoder.decodeObject(forKey: "name") as? String)!
         photopath = (aDecoder.decodeObject(forKey: "photopath") as? String)!
-        resident_id = aDecoder.decodeObject(forKey: "resident_id") as! Int
-        report = aDecoder.decodeObject(forKey: "report") as! String
-        if let check = aDecoder.decodeObject(forKey: "status") as? String{
-            switch check.trimmingCharacters(in: .whitespaces){
-            case "true":
-                status =  true
-                break
-            default:
-                status = false
-            }
-        }
-        uuid = aDecoder.decodeObject(forKey: "uuid") as! String
+        resident_id = aDecoder.decodeObject(forKey: "resident_id") as? Int
+        report = aDecoder.decodeObject(forKey: "report") as? String
+        status = aDecoder.decodeObject(forKey: "status") as? Int
+        uuid = aDecoder.decodeObject(forKey: "uuid") as? String
+        identifier = aDecoder.decodeObject(forKey: "identifier") as? String
     }
     
 }

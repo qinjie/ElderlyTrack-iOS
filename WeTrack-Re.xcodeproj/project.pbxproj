@@ -27,10 +27,10 @@
 		E1486BE32047CFA300BB9245 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1486BE12047CFA300BB9245 /* LaunchScreen.storyboard */; };
 		E153F48A2074CA0F00C69576 /* NearbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E153F4882074CA0F00C69576 /* NearbyCell.swift */; };
 		E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E153F4892074CA0F00C69576 /* NearbyCell.xib */; };
-		E153F48D2074E16000C69576 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E153F48C2074E15F00C69576 /* awsconfiguration.json */; };
 		E153F4932074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E153F4902074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m */; };
 		E153F4942074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = E153F4922074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m */; };
 		E17E041D20727BD800B16C09 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17E041C20727BD800B16C09 /* CustomTabBarController.swift */; };
+		E1861A462078961000328A9F /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1861A452078961000328A9F /* TestController.swift */; };
 		E18A2D9D204EB08A0022AB08 /* MissingResidentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */; };
 		E1AEC91F2048439000868F10 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC91E2048439000868F10 /* Item.swift */; };
 		E1AEC9212048478100868F10 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC9202048478100868F10 /* Functions.swift */; };
@@ -49,6 +49,7 @@
 		E1DAA3F4204FD934004BF193 /* RelativeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F3204FD934004BF193 /* RelativeController.swift */; };
 		E1DAA3F6204FE2C5004BF193 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F5204FE2C5004BF193 /* SettingController.swift */; };
 		E1E421562073CA5C00A90208 /* ResidentDetailAnonumousController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */; };
+		E1F1355A2077A44400539F1E /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E1F135592077A44300539F1E /* awsconfiguration.json */; };
 		E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F410542074823C00B39074 /* ResidentDetailCell.swift */; };
 		E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F410552074823C00B39074 /* ResidentDetailCell.xib */; };
 /* End PBXBuildFile section */
@@ -76,7 +77,6 @@
 		E1486BE42047CFA300BB9245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E153F4882074CA0F00C69576 /* NearbyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyCell.swift; sourceTree = "<group>"; };
 		E153F4892074CA0F00C69576 /* NearbyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NearbyCell.xib; sourceTree = "<group>"; };
-		E153F48C2074E15F00C69576 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		E153F48F2074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSAPI_X2QIQAP347_ElderlytrackClient.h; sourceTree = "<group>"; };
 		E153F4902074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSAPI_X2QIQAP347_ElderlytrackClient.m; sourceTree = "<group>"; };
 		E153F4912074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSAPI_X2QIQAP347_Empty.h; sourceTree = "<group>"; };
@@ -84,6 +84,7 @@
 		E153F4952074E19200C69576 /* Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
 		E160A3B52074EBE0000A5A05 /* WeTrack-Re.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WeTrack-Re.entitlements"; sourceTree = "<group>"; };
 		E17E041C20727BD800B16C09 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		E1861A452078961000328A9F /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingResidentsController.swift; sourceTree = "<group>"; };
 		E1AEC91E2048439000868F10 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E1AEC9202048478100868F10 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
@@ -102,6 +103,7 @@
 		E1DAA3F3204FD934004BF193 /* RelativeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeController.swift; sourceTree = "<group>"; };
 		E1DAA3F5204FE2C5004BF193 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailAnonumousController.swift; sourceTree = "<group>"; };
+		E1F135592077A44300539F1E /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		E1F410542074823C00B39074 /* ResidentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailCell.swift; sourceTree = "<group>"; };
 		E1F410552074823C00B39074 /* ResidentDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResidentDetailCell.xib; sourceTree = "<group>"; };
 		EF73D33E6884A423B2C9FF71 /* Pods_WeTrack_Re.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeTrack_Re.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				E1DAA3F5204FE2C5004BF193 /* SettingController.swift */,
 				E11127A020541179005F957C /* FAQController.swift */,
 				E11127A220542447005F957C /* AboutController.swift */,
+				E1861A452078961000328A9F /* TestController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				E160A3B52074EBE0000A5A05 /* WeTrack-Re.entitlements */,
+				E16D7C59207B419100E80239 /* Images */,
 				E1BC99F9204D64270079B455 /* Others */,
 				E1DAA3F2204FD8EF004BF193 /* TableViewCells */,
 				E111279F2054112E005F957C /* Controllers */,
@@ -167,7 +171,7 @@
 				E1486BDC2047CFA300BB9245 /* Main.storyboard */,
 				E1486BDF2047CFA300BB9245 /* Assets.xcassets */,
 				E1486BE12047CFA300BB9245 /* LaunchScreen.storyboard */,
-				E153F48C2074E15F00C69576 /* awsconfiguration.json */,
+				E1F135592077A44300539F1E /* awsconfiguration.json */,
 				E1486BE42047CFA300BB9245 /* Info.plist */,
 			);
 			path = "WeTrack-Re";
@@ -184,13 +188,22 @@
 			path = Api;
 			sourceTree = "<group>";
 		};
-		E1BC99F9204D64270079B455 /* Others */ = {
+		E16D7C59207B419100E80239 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				E1CC02542054CAA500F82ED6 /* designer_credit.png */,
 				E1CC02532054CAA400F82ED6 /* developer_credit.png */,
 				E1CC02522054CAA400F82ED6 /* human_credit.png */,
+				E1CC024C2054C86D00F82ED6 /* about.png */,
+				E1CC024B2054C86D00F82ED6 /* checkmark.png */,
 				E1CC02552054CAA500F82ED6 /* thanks_to.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		E1BC99F9204D64270079B455 /* Others */ = {
+			isa = PBXGroup;
+			children = (
 				E1AEC91E2048439000868F10 /* Item.swift */,
 				E143369A20490A0100BF74E4 /* Model.swift */,
 				E1AEC9202048478100868F10 /* Functions.swift */,
@@ -202,8 +215,6 @@
 				E111279520539648005F957C /* ViewControllerExtensions.swift */,
 				E17E041C20727BD800B16C09 /* CustomTabBarController.swift */,
 				E1CC024A2054C86C00F82ED6 /* about.html */,
-				E1CC024C2054C86D00F82ED6 /* about.png */,
-				E1CC024B2054C86D00F82ED6 /* checkmark.png */,
 				E111279D20540F60005F957C /* faqs.json */,
 				E1CC02502054C96D00F82ED6 /* css */,
 			);
@@ -272,12 +283,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Kyaw Lin";
 				TargetAttributes = {
 					E1486BD42047CFA300BB9245 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -321,12 +332,12 @@
 				E1CC024F2054C86D00F82ED6 /* about.png in Resources */,
 				E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */,
 				E1CC02572054CAA500F82ED6 /* developer_credit.png in Resources */,
+				E1F1355A2077A44400539F1E /* awsconfiguration.json in Resources */,
 				E1CC02512054C96D00F82ED6 /* css in Resources */,
 				E111279A2053FE99005F957C /* FAQTableViewCell.xib in Resources */,
 				E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */,
 				E111279E20540F60005F957C /* faqs.json in Resources */,
 				E1486BDE2047CFA300BB9245 /* Main.storyboard in Resources */,
-				E153F48D2074E16000C69576 /* awsconfiguration.json in Resources */,
 				E1CC02562054CAA500F82ED6 /* human_credit.png in Resources */,
 				E1CC024E2054C86D00F82ED6 /* checkmark.png in Resources */,
 			);
@@ -448,6 +459,7 @@
 				E1DAA3EF204FA86D004BF193 /* UIViewExtensions.swift in Sources */,
 				E11127A320542447005F957C /* AboutController.swift in Sources */,
 				E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */,
+				E1861A462078961000328A9F /* TestController.swift in Sources */,
 				E11EC7D52054F6FB00E30DA1 /* Reachability.swift in Sources */,
 				E1BC99FF204D66BD0079B455 /* ResidentTableViewCell.swift in Sources */,
 			);
@@ -489,6 +501,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -496,6 +509,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -546,6 +560,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -553,6 +568,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -588,12 +604,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "WeTrack-Re/WeTrack-Re.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EH5BAL5EWL;
 				INFOPLIST_FILE = "WeTrack-Re/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.np.iot.wetrack.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7a7cc3a9-ec68-4760-90a8-e3e551a1cfce";
+				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeTrack-Re/Bridging_Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -606,12 +625,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "WeTrack-Re/WeTrack-Re.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EH5BAL5EWL;
 				INFOPLIST_FILE = "WeTrack-Re/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.np.iot.wetrack.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7a7cc3a9-ec68-4760-90a8-e3e551a1cfce";
+				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeTrack-Re/Bridging_Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

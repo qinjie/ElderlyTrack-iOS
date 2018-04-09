@@ -26,9 +26,10 @@ class ResidentDetailController: UITableViewController {
     var resident: Resident?
     var cellTitle = [String]()
     var cellText = [String]()
-    var beaconsName = [String]()
+    var beacons = [Beacon]()
     var section:Int?
     var hideSwitch: Bool = false
+    var toggleSwitch:Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,7 @@ class ResidentDetailController: UITableViewController {
             
             let reportAction = UIAlertAction(title: "Report", style: .default, handler: { (action:UIAlertAction) in
                 let textField = alertController.textFields![0] as UITextField
-                alamofire.reportMissingResident(resident: self.resident!, remark: textField.text!, viewController: self)
+                api.reportMissing(resident: self.resident!, remark: textField.text!, controller: self)
             })
             let cancelAction = UIAlertAction(title: "Calcel", style: .default, handler: { (action: UIAlertAction) in
                 self.switchBtn.isOn = false
@@ -66,7 +67,7 @@ class ResidentDetailController: UITableViewController {
             self.present(alertController, animated: true, completion: nil)
             
         }else{
-            alamofire.reportMissingResident(resident: self.resident!, remark: "", viewController: self)
+            api.reportMissing(resident: self.resident!, remark: "", controller: self)
         }
         
     }
@@ -135,12 +136,11 @@ class ResidentDetailController: UITableViewController {
         }
         
         if resident?.beacons?.count != 0 {
-            beaconsName.removeAll()
+            beacons.removeAll()
             section = 2
             if resident?.beacons != nil{
                 for beacon in (resident?.beacons)!{
-                    let str = beacon.toString()
-                    beaconsName.append(str)
+                    beacons.append(beacon)
                 }
             }
         }else{
@@ -195,7 +195,7 @@ class ResidentDetailController: UITableViewController {
         if section == 0{
             return cellTitle.count
         }else{
-            return beaconsName.count
+            return beacons.count
         }
     }
     
@@ -235,7 +235,10 @@ class ResidentDetailController: UITableViewController {
             
             cell.setData(title: cellTitle[indexPath.row], text: cellText[indexPath.row])
         }else{
-            cell.setData(title: String(describing:"Beacon: "+String(describing:indexPath.row+1)), text: beaconsName[indexPath.row])
+            if toggleSwitch == true{
+                cell.toggleSwitch.isHidden = false
+            }
+            cell.setData(title: String(describing:"Beacon: "+String(describing:indexPath.row+1)), beacon: beacons[indexPath.row])
         }
         
 

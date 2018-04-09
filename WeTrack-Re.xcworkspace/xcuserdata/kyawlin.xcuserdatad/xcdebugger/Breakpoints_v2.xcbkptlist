@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeTrack-Re/Others/Functions.swift"
-            timestampString = "544531812.236256"
+            filePath = "WeTrack-Re/AppDelegate.swift"
+            timestampString = "544888955.172478"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "loadMissingResidents(viewController:)"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeTrack-Re/Others/Functions.swift"
-            timestampString = "544531812.236353"
+            filePath = "WeTrack-Re/AppDelegate.swift"
+            timestampString = "544888955.172547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "loadMissingResidents(viewController:)"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeTrack-Re/Controllers/LoginController.swift"
+            timestampString = "544888955.1726"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "LoginGoogle(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

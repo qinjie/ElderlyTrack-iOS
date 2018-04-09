@@ -35,14 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         UIApplication.shared.statusBarStyle = .lightContent
         
-        if UserDefaults.standard.string(forKey: "token") == nil {
-            let loginController = mainStoryboard.instantiateViewController(withIdentifier: "Login") as! UINavigationController
-            self.window?.rootViewController = loginController
-        }else{
-            let residentController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
-            self.window?.rootViewController = residentController
-        }
-        
         self.reachability = Reachability()
         do{
             try self.reachability.startNotifier()
@@ -62,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                     let notificaitonSettings = UIUserNotificationSettings.init(types: userNotificationTypes, categories: nil)
                     UIApplication.shared.registerUserNotificationSettings(notificaitonSettings)
                     UIApplication.shared.registerForRemoteNotifications()
+                    
                 }
             }else{
                 print("denied noti")
@@ -70,9 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(notification:)), name: ReachabilityChangedNotification, object: nil)
-        
-        
-        application.registerForRemoteNotifications()
         
         print("pinpoint: " + String(describing: pinpoint?.targetingClient.currentEndpointProfile()))
         
@@ -84,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        
+    
         pinpoint!.notificationManager.interceptDidRegisterForRemoteNotifications(withDeviceToken: deviceToken)
         
     }
@@ -139,8 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.offlineLocations()) as? [LocationHistory]{
                 for location in dict{
                     
-                    alamofire.reportFoundResident(location: location)
-                    
+                    api.reportFound(location: location)
                 }
             }
         }else{
@@ -185,20 +174,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             
             let beacon = GlobalData.beaconList.first(where: {$0.id?.description == info[1]})
             let resident = GlobalData.allResidents.first(where: {$0.id.description == info[2]})
-            if beacon != nil && resident != nil{
-                resident?.report = now
-                beacon?.report = now
-            }
-            
-            if !GlobalData.nearMe.contains(where: {$0.id == beacon?.id}){
-                GlobalData.nearMe.append(beacon!)
+            if beacon != nil{
+                
+                if !GlobalData.nearMe.contains(where: {$0.id == beacon?.id}){
+                    GlobalData.nearMe.append(beacon!)
+                }
+                
+                if resident != nil{
+                    resident?.report = now
+                    beacon?.report = now
+                }
             }
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateHistory"), object: nil)
             DispatchQueue.global().async {
                 let lat = self.locationManager.location?.coordinate.latitude
                 let long = self.locationManager.location?.coordinate.longitude
-                let locationHistory = LocationHistory(bId: info[1], uId: info[2], newlat: String(describing: lat), newlong: String(describing: long))
+                let locationHistory = LocationHistory(bId: info[1], uId: info[2], newlat: String(describing: lat!), newlong: String(describing: long!))
                 
                 if let user = GlobalData.missingList.filter({$0.id == info[2]}).first{
                     for i in 0...GlobalData.missingList.count-1{
@@ -219,7 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 }
                 
                 if self.reachability.isReachable{
-                    alamofire.reportFoundResident(location: locationHistory)
+                    api.reportFound(location: locationHistory)
                 }else{
                     GlobalData.offlineData.append(locationHistory)
                     NSKeyedArchiver.archiveRootObject(GlobalData.offlineData, toFile: FilePath.offlineLocations())

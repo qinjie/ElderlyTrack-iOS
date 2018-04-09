@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AWSAuthCore
 
 class SettingController: UITableViewController {
 
@@ -16,7 +17,7 @@ class SettingController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         nameLabel.text = Constant.username
         emailLabel.text = Constant.email
         navigationItem.title = "Setting"
@@ -61,11 +62,22 @@ class SettingController: UITableViewController {
     @IBAction func signOutPressed(_ sender: UIButton) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "disableScanning"), object: nil)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: nil)
+        Constant.email = ""
         UserDefaults.standard.removeObject(forKey: "email")
         UserDefaults.standard.removeObject(forKey: "role")
         UserDefaults.standard.removeObject(forKey: "token")
         UserDefaults.standard.removeObject(forKey: "user_id")
-        alamofire.logout(viewController: self)
+        UserDefaults.standard.removeObject(forKey: "username")
+        AWSSignInManager.sharedInstance().logout { (success, error) in
+            if error != nil{
+                print("Error logging out: \(String(describing: error?.localizedDescription))")
+            }else{
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    appdelegate.resetAppToFirstController()
+                }
+            }
+        }
+        
     }
     // MARK: - Table view data source
 
