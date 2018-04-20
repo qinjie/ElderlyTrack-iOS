@@ -11,7 +11,6 @@ import SDWebImage
 
 class ResidentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var lastSeenLabel: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -29,10 +28,17 @@ class ResidentTableViewCell: UITableViewCell {
     
     func setData(resident: Resident, type: Int = 0){
         
-        self.nameLabel.text = resident.name
+        if resident.isRelative == false{
+            self.nameLabel.text = ""
+            for _ in 0...resident.name.characters.count-1{
+                self.nameLabel.text?.append("#")
+            }
+        }else{
+            self.nameLabel.text = resident.name
+        }
+        
         if resident.latestLocation != nil{
-            self.addressLabel.text = resident.latestLocation!.address
-            self.lastSeenLabel.text = "Last seen at " + resident.latestLocation!.created_at
+            self.addressLabel.text = "Last seen at " + resident.latestLocation!.created_at
         }
         
         let url = URL(string: Constant.photoURL + resident.photo)
@@ -42,7 +48,7 @@ class ResidentTableViewCell: UITableViewCell {
         }else{
             self.statusImgView.isHidden = false
         }
-        if resident.status == "true"{
+        if resident.status == true{
             self.statusImgView.image = #imageLiteral(resourceName: "CircleRed")
         }else{
             self.statusImgView.image = #imageLiteral(resourceName: "CircleBlue")
@@ -50,14 +56,22 @@ class ResidentTableViewCell: UITableViewCell {
     }
     
     func setData(resident: Resident, warning:Bool = false){
-        self.nameLabel.text = resident.name                                                                                                                         
+        if resident.isRelative == false{
+            self.imgView.image = #imageLiteral(resourceName: "default_avatar")
+            self.nameLabel.text = ""
+            for _ in 0...resident.name.characters.count-1{
+                self.nameLabel.text?.append("#")
+            }
+        }else{
+            self.nameLabel.text = resident.name
+            let url = URL(string: Constant.photoURL + resident.photo)
+            self.imgView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
+        }
         if resident.latestLocation != nil{
-            self.addressLabel.text = resident.latestLocation!.address
-            self.lastSeenLabel.text = "Last seen at " + resident.latestLocation!.created_at
+            self.addressLabel.text = "Last seen at " + resident.latestLocation!.created_at
         }
         
-        let url = URL(string: Constant.photoURL + resident.photo)
-        self.imgView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
+        
         if warning == false{
             self.statusImgView.isHidden = true
         }else{
@@ -66,13 +80,22 @@ class ResidentTableViewCell: UITableViewCell {
         }
     }
     
-    func setData(resident: Resident){
-        self.lastSeenLabel.isHidden = true
+    func setData(beacon: Beacon){
         self.statusImgView.isHidden = true
-        self.addressLabel.text = "Nearby"
-        self.nameLabel.text = resident.name
-        let url = URL(string: Constant.photoURL + resident.photo)
-        self.imgView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
+        self.addressLabel.text = beacon.toString()
+        let resident = GlobalData.allResidents.filter({$0.id == beacon.resident_id?.description}).first
+        if resident?.isRelative == false{
+            self.nameLabel.text = ""
+            for _ in 0...(resident?.name.characters.count)!-1{
+                self.nameLabel.text?.append("#")
+            }
+            self.imgView.image = #imageLiteral(resourceName: "default_avatar")
+        }else{
+            self.nameLabel.text = resident?.name
+            let url = URL(string: Constant.photoURL + (resident?.photo)!)
+            self.imgView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
+        }
+        
     }
     
 }

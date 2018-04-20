@@ -11,17 +11,17 @@ import CoreLocation
 
 class NearMeController: UITableViewController {
 
-    var residents : [Resident]?
+    var beacons : [Beacon]?
     var locationManger : CLLocationManager!
-    fileprivate let cellID = "ResidentTableViewCell"
+    fileprivate let cellID = "NearbyCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.residents = GlobalData.nearMe
+        self.beacons = GlobalData.nearMe
         tableView.reloadData()
         
-        navigationItem.title = "Near Residents"
+        navigationItem.title = "Nearby Beacons"
         
         tableView.register(UINib(nibName: cellID, bundle: nil), forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView(frame: .zero)
@@ -37,13 +37,13 @@ class NearMeController: UITableViewController {
     }
     
     @objc private func loadData(){
-        self.residents = GlobalData.nearMe
+        self.beacons = GlobalData.nearMe
         self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.residents = GlobalData.nearMe
+        self.beacons = GlobalData.nearMe
         tableView.reloadData()
     }
 
@@ -61,15 +61,15 @@ class NearMeController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if let count = residents?.count{
+        if let count = beacons?.count{
             return count
         }
         return 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ResidentTableViewCell
-        cell.setData(resident: (self.residents?[indexPath.row])!)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! NearbyCell
+        cell.setData(beacon: (self.beacons?[indexPath.row])!)
         // Configure the cell...
 
         return cell

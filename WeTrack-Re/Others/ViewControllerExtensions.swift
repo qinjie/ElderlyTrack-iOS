@@ -38,4 +38,8 @@ extension UIViewController{
     func hideLoadingHUD(){
         MBProgressHUD.hide(for: self.view, animated: true)
     }
+    
+    func convertUUID(string: String) -> UUID{
+        return NSUUID(uuidString: string)! as UUID
+    }
 }

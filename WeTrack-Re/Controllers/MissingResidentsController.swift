@@ -17,6 +17,7 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     
     var newRegionList = [CLBeaconRegion]()
     var residents : [Resident]?
+    var monitorLimit = 20
     
     let locationManager = CLLocationManager()
 
@@ -34,14 +35,57 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         loadLocalData()
         
         self.loadMissingResident()
+        api.loadDistinctUUID(controller: self)
+        
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if !launchedBefore{
+            print("First launch, setting Userdefault.")
+            if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    appdelegate.registerNotification()
+            }
+            GlobalData.showNotification = false
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadMissingResident), name: Notification.Name("refreshMissingResident"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncData), name: Notification.Name(rawValue: "sync"), object: nil)
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if GlobalData.showNotification == true{
+            let actionAllow = UIAlertAction(title: "Allow", style: .default, handler: { (_) in
+                print("allowed")
+                UIApplication.shared.registerForRemoteNotifications()
+                UserDefaults.standard.set("true", forKey: "notification")
+                UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (setting) in
+                    if setting.alertSetting.rawValue == 2{
+                        //Enabled
+                    }else{
+                        //Not Enabled
+                        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                            return
+                        }
+                        if UIApplication.shared.canOpenURL(settingsUrl){
+                            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: { (success) in
+                                print("Success")
+                            })
+                        }
+                    }
+                })
+            })
+            let actionDenied = UIAlertAction(title: "Don't Allow", style: .default, handler: { (_) in
+                print("denied")
+                UIApplication.shared.unregisterForRemoteNotifications()
+                UserDefaults.standard.set("false", forKey: "notification")
+            })
+            self.displayAlert(title: "\"ElderlyTrack\" Would Like to Send You Notifications", message: "Notifications may include alerts, sounds and icon badges. These can be configured in Settings.", actions: [actionDenied, actionAllow])
+            GlobalData.showNotification = false
+        }
+    }
+    
     @objc private func loadMissingResident(){
-        alamofire.loadMissingResidents(viewController: self)
+        api.loadMissingResidents(controller: self)
     }
     
     @objc private func syncData(){
@@ -64,7 +108,14 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     @objc func reloadData(){
         
         Timer.after(1) {
-            alamofire.loadMissingResidents(viewController: self)
+            api.loadMissingResidents(controller: self)
+            api.loadDistinctUUID(controller: self)
+        }
+        
+        Timer.after(6) {
+            if (self.tableView.refreshControl?.isRefreshing)!{
+                self.tableView.refreshControl?.endRefreshing()
+            }
         }
         
     }
@@ -80,7 +131,7 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         Constant.username = UserDefaults.standard.string(forKey: "username")!
         Constant.user_id = UserDefaults.standard.integer(forKey: "user_id")
         Constant.role = UserDefaults.standard.integer(forKey: "role")
-        Constant.token = UserDefaults.standard.string(forKey: "token")!
+        //Constant.token = UserDefaults.standard.string(forKey: "token")!
         
     }
     
@@ -89,15 +140,23 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         if Constant.role != 5 && Constant.isLogin == false{
             
             if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.allResidents()) as? [Resident]{
-                
                 GlobalData.allResidents = dict
-                
             }
             
             if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.relativePath()) as? [Resident]{
-                
                 GlobalData.relativeList = dict
-                
+            }
+            
+            if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.beaconList()) as? [Beacon]{
+                GlobalData.beaconList = dict
+            }
+            
+            if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.distinctBeacon()) as? [Beacon]{
+                GlobalData.distinctBeacons = dict
+            }
+            
+            if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: FilePath.reportedHistory()) as? [ReportedHistory]{
+                GlobalData.reportedHistory = dict
             }
             
         }
@@ -124,6 +183,28 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
             
         }
         
+        if GlobalData.distinctBeacons.count > 0{
+            
+            startMonitorCommon()
+            
+        }
+        
+    }
+    
+    @objc func startMonitorCommon(){
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        
+        if GlobalData.distinctBeacons.count <= 20{
+            for i in 0...GlobalData.distinctBeacons.count-1{
+                let uuid = NSUUID(uuidString: GlobalData.distinctBeacons[i].uuid!)! as UUID
+                let identifier = GlobalData.distinctBeacons[i].identifier
+                let commonRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifier!)
+                self.locationManager.startMonitoring(for: commonRegion)
+            }
+        }
+        
     }
     
     @objc private func startMonitor(){
@@ -131,7 +212,7 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        if GlobalData.currentRegionList.count <= 20{
+        if (GlobalData.currentRegionList.count + GlobalData.distinctBeacons.count) <= monitorLimit{
             
             for region in GlobalData.currentRegionList{
                self.locationManager.startMonitoring(for: region)
@@ -139,8 +220,69 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
             
         }else{
             
+            GlobalData.backgroundStartTime = Date()
+            GlobalData.totalGroup = GlobalData.currentRegionList.count/(monitorLimit-GlobalData.distinctBeacons.count) + (GlobalData.currentRegionList.count%(monitorLimit-GlobalData.distinctBeacons.count) > 0 ? 1:0)
+            GlobalData.currentGroup = 1
+            for i in 0...(monitorLimit-1-GlobalData.distinctBeacons.count){
+                locationManager.startMonitoring(for: GlobalData.currentRegionList[i])
+            }
+            refreshList()
         }
         
+    }
+    
+    private func refreshList(){
+        
+        let time = GlobalData.backgroundStartTime
+        let now = Date()
+        let timeInterval = now.timeIntervalSince(time)
+        if timeInterval < 60{
+            print("Time remaining \(60 - timeInterval)")
+            print("Current group \(GlobalData.currentGroup)")
+            stopMonitorSpecific()
+            var check = Bool()
+            for i in 1...GlobalData.totalGroup{
+                if GlobalData.currentGroup == i{
+                    if i == GlobalData.totalGroup && check == false{
+                        GlobalData.currentGroup = 1
+                        check = false
+                    }else{
+                        if check == false{
+                            GlobalData.currentGroup = i + 1
+                            check = true
+                        }
+                    }
+                }
+            }
+            print("Next group \(GlobalData.currentGroup)")
+            let limit = (monitorLimit - GlobalData.distinctBeacons.count)
+            let start = (GlobalData.currentGroup - 1)*limit
+            if (GlobalData.currentRegionList.count - start) > limit{
+                for i in 0...limit-1{
+                    locationManager.startMonitoring(for: GlobalData.currentRegionList[i+start])
+                }
+            }else{
+                if GlobalData.currentRegionList.count > 0 {
+                    for i in 0...(GlobalData.currentRegionList.count - start) - 1{
+                        locationManager.startMonitoring(for: GlobalData.currentRegionList[i+start])
+                    }
+                }
+            }
+            
+        }
+        Timer.after(3) {
+            self.refreshList()
+        }
+        
+    }
+    
+    private func stopMonitorSpecific(){
+        for region in self.locationManager.monitoredRegions{
+            let info = region.identifier.components(separatedBy: "#")
+            if info[0] != "common"{
+                self.locationManager.stopMonitoring(for: region)
+            }
+        }
     }
     
     @objc private func stopMonitor(){
@@ -177,7 +319,11 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "detailSegue", sender: residents?[indexPath.item])
+        if (residents?[indexPath.item].isRelative)!{
+            self.performSegue(withIdentifier: "detailSegue", sender: residents?[indexPath.item])
+        }else{
+            self.performSegue(withIdentifier: "detailAnonymousSegue", sender: residents?[indexPath.item])
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -219,7 +365,11 @@ class MissingResidentsController: UITableViewController, CLLocationManagerDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let resident = sender as? Resident{
             if let detailController = segue.destination as? ResidentDetailController{
+                detailController.hideSwitch = true
                 detailController.resident = resident
+            }
+            if let detailAnonumous = segue.destination as? ResidentDetailAnonumousController{
+                detailAnonumous.resident = resident
             }
         }
     }

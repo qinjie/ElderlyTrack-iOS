@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "769E418C0FA29F1CC6D66E100709D115"
+               BlueprintIdentifier = "CF36F649A174FB53EC864708645BD819"
                BuildableName = "Pods_WeTrack_Re.framework"
                BlueprintName = "Pods-WeTrack-Re"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -47,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "769E418C0FA29F1CC6D66E100709D115"
+            BlueprintIdentifier = "CF36F649A174FB53EC864708645BD819"
             BuildableName = "Pods_WeTrack_Re.framework"
             BlueprintName = "Pods-WeTrack-Re"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -8,12 +8,14 @@ target 'WeTrack-Re' do
 
   # Pods for WeTrack-Re
   pod 'Alamofire'
-  pod 'Firebase/Auth'
   pod 'GoogleSignIn'
-  pod 'Firebase/Core'
   pod 'SwiftyTimer'
   pod 'SwiftyJSON'
-  pod 'FirebaseMessaging'
   pod 'SDWebImage'
   pod 'MBProgressHUD'
+  pod 'AWSAuthUI', '~> 2.6.13'
+  pod 'AWSMobileClient', '~> 2.6.13'
+  pod 'AWSGoogleSignIn', '~> 2.6.13'
+  pod 'AWSAPIGateway', '~> 2.6.13'
+  pod 'AWSPinpoint', '~> 2.6.13'
 end

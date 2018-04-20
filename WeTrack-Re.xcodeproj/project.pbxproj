@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5CBBF5B515932F104B9983B2 /* Pods_WeTrack_Re.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF73D33E6884A423B2C9FF71 /* Pods_WeTrack_Re.framework */; };
+		E10616EA207DFE7A0019E5C9 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E10616E9207DFE7A0019E5C9 /* awsconfiguration.json */; };
 		E1112794205390DE005F957C /* ResidentDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1112793205390DE005F957C /* ResidentDetailController.swift */; };
 		E111279620539648005F957C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E111279520539648005F957C /* ViewControllerExtensions.swift */; };
 		E11127992053FE99005F957C /* FAQTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11127972053FE99005F957C /* FAQTableViewCell.swift */; };
@@ -25,12 +26,16 @@
 		E1486BDE2047CFA300BB9245 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1486BDC2047CFA300BB9245 /* Main.storyboard */; };
 		E1486BE02047CFA300BB9245 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1486BDF2047CFA300BB9245 /* Assets.xcassets */; };
 		E1486BE32047CFA300BB9245 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1486BE12047CFA300BB9245 /* LaunchScreen.storyboard */; };
+		E153F48A2074CA0F00C69576 /* NearbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E153F4882074CA0F00C69576 /* NearbyCell.swift */; };
+		E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E153F4892074CA0F00C69576 /* NearbyCell.xib */; };
+		E153F4932074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E153F4902074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m */; };
+		E153F4942074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = E153F4922074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m */; };
+		E17E041D20727BD800B16C09 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17E041C20727BD800B16C09 /* CustomTabBarController.swift */; };
 		E18A2D9D204EB08A0022AB08 /* MissingResidentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */; };
 		E1AEC91F2048439000868F10 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC91E2048439000868F10 /* Item.swift */; };
 		E1AEC9212048478100868F10 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC9202048478100868F10 /* Functions.swift */; };
 		E1BC99FF204D66BD0079B455 /* ResidentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC99FD204D66BD0079B455 /* ResidentTableViewCell.swift */; };
 		E1BC9A00204D66BD0079B455 /* ResidentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1BC99FE204D66BD0079B455 /* ResidentTableViewCell.xib */; };
-		E1C81C3420497D19005A5B51 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C81C3320497D19005A5B51 /* GoogleService-Info.plist */; };
 		E1CC024D2054C86D00F82ED6 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = E1CC024A2054C86C00F82ED6 /* about.html */; };
 		E1CC024E2054C86D00F82ED6 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = E1CC024B2054C86D00F82ED6 /* checkmark.png */; };
 		E1CC024F2054C86D00F82ED6 /* about.png in Resources */ = {isa = PBXBuildFile; fileRef = E1CC024C2054C86D00F82ED6 /* about.png */; };
@@ -43,10 +48,14 @@
 		E1DAA3F1204FB6C2004BF193 /* NearMeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F0204FB6C2004BF193 /* NearMeController.swift */; };
 		E1DAA3F4204FD934004BF193 /* RelativeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F3204FD934004BF193 /* RelativeController.swift */; };
 		E1DAA3F6204FE2C5004BF193 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F5204FE2C5004BF193 /* SettingController.swift */; };
+		E1E421562073CA5C00A90208 /* ResidentDetailAnonumousController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */; };
+		E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F410542074823C00B39074 /* ResidentDetailCell.swift */; };
+		E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F410552074823C00B39074 /* ResidentDetailCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4C15D25410A0199805F2B6EA /* Pods-WeTrack-Re.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeTrack-Re.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeTrack-Re/Pods-WeTrack-Re.debug.xcconfig"; sourceTree = "<group>"; };
+		E10616E9207DFE7A0019E5C9 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		E1112793205390DE005F957C /* ResidentDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailController.swift; sourceTree = "<group>"; };
 		E111279520539648005F957C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		E11127972053FE99005F957C /* FAQTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQTableViewCell.swift; sourceTree = "<group>"; };
@@ -66,12 +75,20 @@
 		E1486BDF2047CFA300BB9245 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1486BE22047CFA300BB9245 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1486BE42047CFA300BB9245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E153F4882074CA0F00C69576 /* NearbyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyCell.swift; sourceTree = "<group>"; };
+		E153F4892074CA0F00C69576 /* NearbyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NearbyCell.xib; sourceTree = "<group>"; };
+		E153F48F2074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSAPI_X2QIQAP347_ElderlytrackClient.h; sourceTree = "<group>"; };
+		E153F4902074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSAPI_X2QIQAP347_ElderlytrackClient.m; sourceTree = "<group>"; };
+		E153F4912074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSAPI_X2QIQAP347_Empty.h; sourceTree = "<group>"; };
+		E153F4922074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSAPI_X2QIQAP347_Empty.m; sourceTree = "<group>"; };
+		E153F4952074E19200C69576 /* Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
+		E160A3B52074EBE0000A5A05 /* WeTrack-Re.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WeTrack-Re.entitlements"; sourceTree = "<group>"; };
+		E17E041C20727BD800B16C09 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingResidentsController.swift; sourceTree = "<group>"; };
 		E1AEC91E2048439000868F10 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E1AEC9202048478100868F10 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		E1BC99FD204D66BD0079B455 /* ResidentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentTableViewCell.swift; sourceTree = "<group>"; };
 		E1BC99FE204D66BD0079B455 /* ResidentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResidentTableViewCell.xib; sourceTree = "<group>"; };
-		E1C81C3320497D19005A5B51 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E1CC024A2054C86C00F82ED6 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		E1CC024B2054C86D00F82ED6 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		E1CC024C2054C86D00F82ED6 /* about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about.png; sourceTree = "<group>"; };
@@ -84,6 +101,9 @@
 		E1DAA3F0204FB6C2004BF193 /* NearMeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeController.swift; sourceTree = "<group>"; };
 		E1DAA3F3204FD934004BF193 /* RelativeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeController.swift; sourceTree = "<group>"; };
 		E1DAA3F5204FE2C5004BF193 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailAnonumousController.swift; sourceTree = "<group>"; };
+		E1F410542074823C00B39074 /* ResidentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailCell.swift; sourceTree = "<group>"; };
+		E1F410552074823C00B39074 /* ResidentDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResidentDetailCell.xib; sourceTree = "<group>"; };
 		EF73D33E6884A423B2C9FF71 /* Pods_WeTrack_Re.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeTrack_Re.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC62D86241599A95C9AB8BB /* Pods-WeTrack-Re.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeTrack-Re.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeTrack-Re/Pods-WeTrack-Re.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +128,7 @@
 				E1DAA3F0204FB6C2004BF193 /* NearMeController.swift */,
 				E1DAA3F3204FD934004BF193 /* RelativeController.swift */,
 				E1112793205390DE005F957C /* ResidentDetailController.swift */,
+				E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */,
 				E1DAA3F5204FE2C5004BF193 /* SettingController.swift */,
 				E11127A020541179005F957C /* FAQController.swift */,
 				E11127A220542447005F957C /* AboutController.swift */,
@@ -136,26 +157,50 @@
 		E1486BD72047CFA300BB9245 /* WeTrack-Re */ = {
 			isa = PBXGroup;
 			children = (
+				E160A3B52074EBE0000A5A05 /* WeTrack-Re.entitlements */,
+				E16D7C59207B419100E80239 /* Images */,
 				E1BC99F9204D64270079B455 /* Others */,
 				E1DAA3F2204FD8EF004BF193 /* TableViewCells */,
 				E111279F2054112E005F957C /* Controllers */,
+				E153F48E2074E18800C69576 /* Api */,
 				E1486BD82047CFA300BB9245 /* AppDelegate.swift */,
+				E153F4952074E19200C69576 /* Bridging_Header.h */,
 				E1486BDC2047CFA300BB9245 /* Main.storyboard */,
 				E1486BDF2047CFA300BB9245 /* Assets.xcassets */,
 				E1486BE12047CFA300BB9245 /* LaunchScreen.storyboard */,
-				E1C81C3320497D19005A5B51 /* GoogleService-Info.plist */,
+				E10616E9207DFE7A0019E5C9 /* awsconfiguration.json */,
 				E1486BE42047CFA300BB9245 /* Info.plist */,
 			);
 			path = "WeTrack-Re";
 			sourceTree = "<group>";
 		};
-		E1BC99F9204D64270079B455 /* Others */ = {
+		E153F48E2074E18800C69576 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E153F48F2074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.h */,
+				E153F4902074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m */,
+				E153F4912074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.h */,
+				E153F4922074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		E16D7C59207B419100E80239 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				E1CC02542054CAA500F82ED6 /* designer_credit.png */,
 				E1CC02532054CAA400F82ED6 /* developer_credit.png */,
 				E1CC02522054CAA400F82ED6 /* human_credit.png */,
+				E1CC024C2054C86D00F82ED6 /* about.png */,
+				E1CC024B2054C86D00F82ED6 /* checkmark.png */,
 				E1CC02552054CAA500F82ED6 /* thanks_to.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		E1BC99F9204D64270079B455 /* Others */ = {
+			isa = PBXGroup;
+			children = (
 				E1AEC91E2048439000868F10 /* Item.swift */,
 				E143369A20490A0100BF74E4 /* Model.swift */,
 				E1AEC9202048478100868F10 /* Functions.swift */,
@@ -165,9 +210,8 @@
 				E1DAA3EE204FA86D004BF193 /* UIViewExtensions.swift */,
 				E12E9844204FEEF800A6A7F7 /* UIColorExtensions.swift */,
 				E111279520539648005F957C /* ViewControllerExtensions.swift */,
+				E17E041C20727BD800B16C09 /* CustomTabBarController.swift */,
 				E1CC024A2054C86C00F82ED6 /* about.html */,
-				E1CC024C2054C86D00F82ED6 /* about.png */,
-				E1CC024B2054C86D00F82ED6 /* checkmark.png */,
 				E111279D20540F60005F957C /* faqs.json */,
 				E1CC02502054C96D00F82ED6 /* css */,
 			);
@@ -181,6 +225,10 @@
 				E1BC99FE204D66BD0079B455 /* ResidentTableViewCell.xib */,
 				E11127972053FE99005F957C /* FAQTableViewCell.swift */,
 				E11127982053FE99005F957C /* FAQTableViewCell.xib */,
+				E1F410542074823C00B39074 /* ResidentDetailCell.swift */,
+				E1F410552074823C00B39074 /* ResidentDetailCell.xib */,
+				E153F4882074CA0F00C69576 /* NearbyCell.swift */,
+				E153F4892074CA0F00C69576 /* NearbyCell.xib */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -232,14 +280,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Kyaw Lin";
 				TargetAttributes = {
 					E1486BD42047CFA300BB9245 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -275,11 +326,13 @@
 				E1486BE32047CFA300BB9245 /* LaunchScreen.storyboard in Resources */,
 				E1CC02582054CAA500F82ED6 /* designer_credit.png in Resources */,
 				E1486BE02047CFA300BB9245 /* Assets.xcassets in Resources */,
-				E1C81C3420497D19005A5B51 /* GoogleService-Info.plist in Resources */,
 				E1CC024F2054C86D00F82ED6 /* about.png in Resources */,
+				E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */,
 				E1CC02572054CAA500F82ED6 /* developer_credit.png in Resources */,
+				E10616EA207DFE7A0019E5C9 /* awsconfiguration.json in Resources */,
 				E1CC02512054C96D00F82ED6 /* css in Resources */,
 				E111279A2053FE99005F957C /* FAQTableViewCell.xib in Resources */,
+				E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */,
 				E111279E20540F60005F957C /* faqs.json in Resources */,
 				E1486BDE2047CFA300BB9245 /* Main.storyboard in Resources */,
 				E1CC02562054CAA500F82ED6 /* human_credit.png in Resources */,
@@ -297,29 +350,39 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WeTrack-Re/Pods-WeTrack-Re-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAPIGateway/AWSAPIGateway.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthUI/AWSAuthUI.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSGoogleSignIn/AWSGoogleSignIn.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSPinpoint/AWSPinpoint.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyTimer/SwiftyTimer.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAPIGateway.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSGoogleSignIn.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSPinpoint.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyTimer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -373,13 +436,18 @@
 				E111279620539648005F957C /* ViewControllerExtensions.swift in Sources */,
 				E143369B20490A0100BF74E4 /* Model.swift in Sources */,
 				E1112794205390DE005F957C /* ResidentDetailController.swift in Sources */,
+				E153F48A2074CA0F00C69576 /* NearbyCell.swift in Sources */,
 				E12E9845204FEEF800A6A7F7 /* UIColorExtensions.swift in Sources */,
 				E111279C205400E7005F957C /* FAQ.swift in Sources */,
 				E1486BDB2047CFA300BB9245 /* LoginController.swift in Sources */,
 				E1DAA3F4204FD934004BF193 /* RelativeController.swift in Sources */,
+				E17E041D20727BD800B16C09 /* CustomTabBarController.swift in Sources */,
 				E11127A120541179005F957C /* FAQController.swift in Sources */,
+				E1E421562073CA5C00A90208 /* ResidentDetailAnonumousController.swift in Sources */,
 				E143369D2049164F00BF74E4 /* FilePath.swift in Sources */,
 				E1DAA3F1204FB6C2004BF193 /* NearMeController.swift in Sources */,
+				E153F4942074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m in Sources */,
+				E153F4932074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m in Sources */,
 				E1AEC91F2048439000868F10 /* Item.swift in Sources */,
 				E18A2D9D204EB08A0022AB08 /* MissingResidentsController.swift in Sources */,
 				E1486BD92047CFA300BB9245 /* AppDelegate.swift in Sources */,
@@ -387,6 +455,7 @@
 				E1AEC9212048478100868F10 /* Functions.swift in Sources */,
 				E1DAA3EF204FA86D004BF193 /* UIViewExtensions.swift in Sources */,
 				E11127A320542447005F957C /* AboutController.swift in Sources */,
+				E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */,
 				E11EC7D52054F6FB00E30DA1 /* Reachability.swift in Sources */,
 				E1BC99FF204D66BD0079B455 /* ResidentTableViewCell.swift in Sources */,
 			);
@@ -428,6 +497,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -435,6 +505,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -485,6 +556,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -492,6 +564,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -526,12 +599,17 @@
 			baseConfigurationReference = 4C15D25410A0199805F2B6EA /* Pods-WeTrack-Re.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "WeTrack-Re/WeTrack-Re.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EH5BAL5EWL;
 				INFOPLIST_FILE = "WeTrack-Re/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.np.iot.wetrack.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "88738f6a-f9f5-4c90-9d2c-2cc6db9e375d";
+				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track";
+				SWIFT_OBJC_BRIDGING_HEADER = "WeTrack-Re/Bridging_Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -542,12 +620,17 @@
 			baseConfigurationReference = FFC62D86241599A95C9AB8BB /* Pods-WeTrack-Re.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "WeTrack-Re/WeTrack-Re.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EH5BAL5EWL;
 				INFOPLIST_FILE = "WeTrack-Re/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.np.iot.wetrack.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "88738f6a-f9f5-4c90-9d2c-2cc6db9e375d";
+				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track";
+				SWIFT_OBJC_BRIDGING_HEADER = "WeTrack-Re/Bridging_Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

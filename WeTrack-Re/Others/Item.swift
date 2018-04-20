@@ -10,15 +10,18 @@ import Foundation
 import CoreLocation
 
 struct Constant{
-    static let baseURL = "http://128.199.93.67/WeTrack/api/web/index.php/v1/"
-    static let URLLogin = baseURL + "user/login-email"
-    static let URLReport = baseURL + "location-history"
-    static let URLMissing = baseURL + "resident/missing?expand=beacons,relatives,locations"
-    static let URLAll = baseURL + "resident?expand=relatives,beacons,locations,locationHistories"
-    static let URLCreateDeviceToken = baseURL + "device-token/new"
-    static let URLDeleteDeviceToken = baseURL + "device-token/del"
-    static let URLStatus = baseURL + "resident/status"
-    static let URLLogout = baseURL + "user/logout"
+    //static let baseURL = "http://128.199.93.67/WeTrack/api/web/index.php/v1/"
+    static let URLLoginEmail = "/v1/user/login_with_email"
+    static let URLLoginAnonymous = "/v1/user/login_anonymous"
+    static let URLReportMissing = "/v1/resident/report_missing"
+    static let URLMissing = "/v1/resident/missing"
+    static let URLRelatives = "/v1/resident/relatives"
+    static let URLReportFound = "/v1/resident/report_found"
+    static let URLDisableBeacon = "/v1/beacon/disable_beacon"
+    static let URLDistinctUUID = "/v1/beacon/load_distinctUUID"
+    static let URLRegisterEndpoint = "/v1/pinpoint/register_endpoint"
+    static let URLDisableEndpoint = "/v1/pinpoint/disable_endpoint"
+    static let URLNotificationStatus = "/v1/user/notification_status"
     
     static var device_token = ""
     static let restartTime = 300.0
@@ -34,14 +37,20 @@ struct Constant{
 }
 
 struct GlobalData{
-    static var residentStatus = [String:String]()
+    static var distinctBeacons = [Beacon]()
     static var missingList = [Resident]()
     static var allResidents = [Resident]()
     static var relativeList = [Resident]()
     static var history = [Beacon]()
-    static var nearMe = [Resident]()
+    static var nearMe = [Beacon]()
     static var offlineData = [LocationHistory]()
+    static var reportedHistory = [ReportedHistory]()
+    
+    static var showNotification = false
     
     static var beaconList = [Beacon]()
     static var currentRegionList = [CLBeaconRegion]()
+    static var totalGroup = Int()
+    static var currentGroup = Int()
+    static var backgroundStartTime = Date()
 }

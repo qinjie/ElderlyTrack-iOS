@@ -7,22 +7,27 @@
 //
 
 import UIKit
+import AWSAuthCore
+import UserNotifications
 
 class SettingController: UITableViewController {
 
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var notificationSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         nameLabel.text = Constant.username
         emailLabel.text = Constant.email
         navigationItem.title = "Setting"
         
-        if Constant.role != 5 && Constant.userphoto != nil{
-            let photo = NSData(contentsOf: Constant.userphoto!)
+        let photoURL = UserDefaults.standard.url(forKey: "userphoto")
+        
+        if photoURL != nil{
+            let photo = NSData(contentsOf: photoURL!)
             if photo != nil{
                 imageView.image = UIImage(data: photo! as Data)
             }
@@ -35,6 +40,16 @@ class SettingController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let notification = Bool(UserDefaults.standard.string(forKey: "notification")!){
+            if notification == true{
+                notificationSwitch.isOn = true
+            }else{
+                notificationSwitch.isOn = false
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,18 +66,77 @@ class SettingController: UITableViewController {
     }
     
     @IBAction func switchNotiPressed(_ sender: UISwitch) {
-        if sender.isOn{
-            Constant.notification = true
-        }else{
-            Constant.notification = false
-        }
+        api.disableEndpoint(controller: self)
+    }
+    
+    func setSwitch(){
+        notificationSwitch.isOn = true
+        Constant.notification = true
+        UIApplication.shared.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (setting) in
+            if setting.alertSetting.rawValue == 2{
+                //Enabled
+            }else{
+                //Not Enabled
+                let actionOK = UIAlertAction(title: "Setting", style: .default) { (_) in
+                    guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                        return
+                    }
+                    if UIApplication.shared.canOpenURL(settingsUrl){
+                        UIApplication.shared.open(settingsUrl, options: [:], completionHandler: { (success) in
+                            print("Success")
+                        })
+                    }
+                }
+                self.displayAlert(title: "Notification", message: "Please allow the notification in the setting", actions: [actionOK])
+            }
+        })
+        UserDefaults.standard.set(String(describing: notificationSwitch.isOn), forKey: "notification")
+    }
+    
+    func unsetSwitch(){
+        notificationSwitch.isOn = false
+        Constant.notification = true
+        UIApplication.shared.unregisterForRemoteNotifications()
+        UserDefaults.standard.set(String(describing: notificationSwitch.isOn), forKey: "notification")
     }
 
     @IBAction func signOutPressed(_ sender: UIButton) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "disableScanning"), object: nil)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: nil)
         
-        alamofire.logout(viewController: self)
+        self.showLoadingHUD()
+        
+        if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+            if !appdelegate.isInternetAvailable(){
+                let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                self.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                return
+            }
+        }
+        
+        AWSSignInManager.sharedInstance().logout { (success, error) in
+            self.hideLoadingHUD()
+            if error != nil{
+                print("Error logging out: \(String(describing: error?.localizedDescription))")
+            }else{
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "disableScanning"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: nil)
+                Constant.email = ""
+                UserDefaults.standard.removeObject(forKey: "email")
+                UserDefaults.standard.removeObject(forKey: "role")
+                UserDefaults.standard.removeObject(forKey: "token")
+                UserDefaults.standard.removeObject(forKey: "user_id")
+                UserDefaults.standard.removeObject(forKey: "username")
+                UserDefaults.standard.removeObject(forKey: "userphoto")
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    appdelegate.resetAppToFirstController()
+                }
+            }
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     // MARK: - Table view data source
 

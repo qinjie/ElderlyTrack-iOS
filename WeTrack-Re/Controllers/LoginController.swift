@@ -8,12 +8,12 @@
 
 import UIKit
 import Alamofire
-import Firebase
-import FirebaseAuth
-import GoogleSignIn
 import UserNotifications
+import AWSAuthUI
+import AWSAuthCore
+import GoogleSignIn
 
-class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
+class LoginController: UIViewController {
     
     let alertController = UIAlertController(title: nil, message: "Please wait...\n\n", preferredStyle: .alert)
     let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -22,21 +22,17 @@ class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate 
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().delegate = self
-        
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.blue
         alertController.view.addSubview(spinnerIndicator)
-        
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults.standard.string(forKey: "device_token") == nil{
-            spinnerIndicator.startAnimating()
-            self.present(alertController, animated: true, completion: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(tokenRefreshed), name: Notification.Name.InstanceIDTokenRefresh, object: nil)
-        }
+//        if UserDefaults.standard.string(forKey: "device_token") == nil{
+//            spinnerIndicator.startAnimating()
+//            self.present(alertController, animated: true, completion: nil)
+//        }
     }
     
     @objc func tokenRefreshed(){
@@ -45,48 +41,35 @@ class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate 
 
     @IBAction func LoginAnonymous(_ sender: UIButton) {
         
-        Constant.user_id = 0
-        if UserDefaults.standard.string(forKey: "device_token") != nil{
-            Constant.device_token = UserDefaults.standard.string(forKey: "device_token")!
-            alamofire.createDeviceToken(viewController: self)
-        }
-        
-        UserDefaults.standard.set("Anonymous", forKey: "username")
-        UserDefaults.standard.set(Constant.user_id, forKey: "user_id")
-        Constant.username = "Anonymous"
+        api.loginAnonymous(controller: self)
+        Constant.userphoto = nil
     }
     
     @IBAction func LoginGoogle(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().signIn()
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        
-        spinnerIndicator.startAnimating()
-        
-        if let error = error{
-            print("Failed to log into Google: ", error)
-            return
+        if !AWSSignInManager.sharedInstance().isLoggedIn {
+            AWSAuthUIViewController
+                .presentViewController(with: self.navigationController!,
+                                       configuration: nil,
+                                       completionHandler: { (provider: AWSSignInProvider, error: Error?) in
+                                        if error != nil {
+                                            print("Error occurred: \(String(describing: error))")
+                                        } else {
+                                            // Sign in successful.
+                                            print("Sign in successful, useID: " + String(describing: GIDSignIn.sharedInstance().currentUser.profile.email))
+                                            Constant.email = GIDSignIn.sharedInstance().currentUser.profile.email
+                                            if GIDSignIn.sharedInstance().currentUser.profile.hasImage{
+                                                Constant.userphoto = GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 120)
+                                                UserDefaults.standard.set(Constant.userphoto, forKey: "userphoto")
+                                            }
+                                            api.loginWithEmail(controller: self)
+                                        }
+                })
         }else{
-            self.present(alertController, animated: true, completion: nil)
-            print("Successfully log into Google", user)
-            guard let idToken = user.authentication.idToken else {return}
-            guard let accessToken = user.authentication.accessToken else {return}
-            let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-            Auth.auth().signIn(with: credentials, completion: { (user, error) in
-                if let error = error{
-                    print("Failed to create a Firebase User with Google account: ", error)
-                    return
-                }else{
-                    guard let uid = user?.uid else {return}
-                    print("user email login \(user?.email)")
-                    
-                    Constant.userphoto = user?.photoURL
-                    
-                    alamofire.loginWithEmail(email: (user?.email)!,viewController: self)
-                }
-            })
-            
+            Constant.email = GIDSignIn.sharedInstance().currentUser.profile.email
+            if GIDSignIn.sharedInstance().currentUser.profile.hasImage{
+                Constant.userphoto = GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 120)
+            }
+            api.loginWithEmail(controller: self)
         }
     }
     
