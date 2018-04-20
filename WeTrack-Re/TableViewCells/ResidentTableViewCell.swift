@@ -11,7 +11,6 @@ import SDWebImage
 
 class ResidentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var lastSeenLabel: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -39,8 +38,7 @@ class ResidentTableViewCell: UITableViewCell {
         }
         
         if resident.latestLocation != nil{
-            self.addressLabel.text = resident.latestLocation!.address
-            self.lastSeenLabel.text = "Last seen at " + resident.latestLocation!.created_at
+            self.addressLabel.text = "Last seen at " + resident.latestLocation!.created_at
         }
         
         let url = URL(string: Constant.photoURL + resident.photo)
@@ -59,20 +57,21 @@ class ResidentTableViewCell: UITableViewCell {
     
     func setData(resident: Resident, warning:Bool = false){
         if resident.isRelative == false{
+            self.imgView.image = #imageLiteral(resourceName: "default_avatar")
             self.nameLabel.text = ""
             for _ in 0...resident.name.characters.count-1{
                 self.nameLabel.text?.append("#")
             }
         }else{
             self.nameLabel.text = resident.name
+            let url = URL(string: Constant.photoURL + resident.photo)
+            self.imgView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
         }
         if resident.latestLocation != nil{
-            self.addressLabel.text = resident.latestLocation!.address
-            self.lastSeenLabel.text = "Last seen at " + resident.latestLocation!.created_at
+            self.addressLabel.text = "Last seen at " + resident.latestLocation!.created_at
         }
         
-        let url = URL(string: Constant.photoURL + resident.photo)
-        self.imgView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
+        
         if warning == false{
             self.statusImgView.isHidden = true
         }else{
@@ -82,7 +81,6 @@ class ResidentTableViewCell: UITableViewCell {
     }
     
     func setData(beacon: Beacon){
-        self.lastSeenLabel.isHidden = true
         self.statusImgView.isHidden = true
         self.addressLabel.text = beacon.toString()
         let resident = GlobalData.allResidents.filter({$0.id == beacon.resident_id?.description}).first

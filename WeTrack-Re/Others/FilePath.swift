@@ -40,4 +40,9 @@ struct FilePath{
         return dir!.appendingPathComponent("distinctBeacon.txt").path
     }
     
+    static func reportedHistory() -> String{
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return dir!.appendingPathComponent("reportedHistory.txt").path
+    }
+    
 }

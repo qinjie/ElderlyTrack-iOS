@@ -149,6 +149,28 @@ class Resident: NSObject, NSCoding {
     
 }
 
+class ReportedHistory: NSObject, NSCoding{
+    
+    var regionIdentifier: String?
+    var time: Date?
+    
+    override init() {
+        regionIdentifier = ""
+        time = Date()
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(regionIdentifier, forKey: "regionIdentifier")
+        aCoder.encode(dateFormatter.format(date: time!, format: "yyyy-MM-dd HH:mm:ss"), forKey: "time")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        regionIdentifier = aDecoder.decodeObject(forKey: "regionIdentifier") as? String ?? ""
+        time = dateFormatter.format(string: aDecoder.decodeObject(forKey: "time") as? String ?? dateFormatter.format(date: Date(), format: "yyyy-MM-dd HH:mm:ss"), format: "yyyy-MM-dd HH:mm:ss")
+    }
+    
+}
+
 class LocationHistory: NSObject, NSCoding {
     
     var beaconId: String = "123"

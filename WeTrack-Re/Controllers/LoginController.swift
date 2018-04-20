@@ -25,14 +25,7 @@ class LoginController: UIViewController {
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.blue
         alertController.view.addSubview(spinnerIndicator)
-        
-        if UserDefaults.standard.string(forKey: "username") != "anonymous"{
-            if AWSSignInManager.sharedInstance().isLoggedIn{
-                self.performSegue(withIdentifier: "home", sender: nil)
-            }
-        }else{
-            self.performSegue(withIdentifier: "home", sender: nil)
-        }
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,7 +42,7 @@ class LoginController: UIViewController {
     @IBAction func LoginAnonymous(_ sender: UIButton) {
         
         api.loginAnonymous(controller: self)
-        
+        Constant.userphoto = nil
     }
     
     @IBAction func LoginGoogle(_ sender: UIButton) {
@@ -66,10 +59,17 @@ class LoginController: UIViewController {
                                             Constant.email = GIDSignIn.sharedInstance().currentUser.profile.email
                                             if GIDSignIn.sharedInstance().currentUser.profile.hasImage{
                                                 Constant.userphoto = GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 120)
+                                                UserDefaults.standard.set(Constant.userphoto, forKey: "userphoto")
                                             }
                                             api.loginWithEmail(controller: self)
                                         }
                 })
+        }else{
+            Constant.email = GIDSignIn.sharedInstance().currentUser.profile.email
+            if GIDSignIn.sharedInstance().currentUser.profile.hasImage{
+                Constant.userphoto = GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 120)
+            }
+            api.loginWithEmail(controller: self)
         }
     }
     

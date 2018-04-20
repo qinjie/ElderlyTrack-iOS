@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5CBBF5B515932F104B9983B2 /* Pods_WeTrack_Re.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF73D33E6884A423B2C9FF71 /* Pods_WeTrack_Re.framework */; };
+		E10616EA207DFE7A0019E5C9 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E10616E9207DFE7A0019E5C9 /* awsconfiguration.json */; };
 		E1112794205390DE005F957C /* ResidentDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1112793205390DE005F957C /* ResidentDetailController.swift */; };
 		E111279620539648005F957C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E111279520539648005F957C /* ViewControllerExtensions.swift */; };
 		E11127992053FE99005F957C /* FAQTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11127972053FE99005F957C /* FAQTableViewCell.swift */; };
@@ -30,7 +31,6 @@
 		E153F4932074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E153F4902074E18800C69576 /* AWSAPI_X2QIQAP347_ElderlytrackClient.m */; };
 		E153F4942074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = E153F4922074E18800C69576 /* AWSAPI_X2QIQAP347_Empty.m */; };
 		E17E041D20727BD800B16C09 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17E041C20727BD800B16C09 /* CustomTabBarController.swift */; };
-		E1861A462078961000328A9F /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1861A452078961000328A9F /* TestController.swift */; };
 		E18A2D9D204EB08A0022AB08 /* MissingResidentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */; };
 		E1AEC91F2048439000868F10 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC91E2048439000868F10 /* Item.swift */; };
 		E1AEC9212048478100868F10 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEC9202048478100868F10 /* Functions.swift */; };
@@ -49,13 +49,13 @@
 		E1DAA3F4204FD934004BF193 /* RelativeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F3204FD934004BF193 /* RelativeController.swift */; };
 		E1DAA3F6204FE2C5004BF193 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DAA3F5204FE2C5004BF193 /* SettingController.swift */; };
 		E1E421562073CA5C00A90208 /* ResidentDetailAnonumousController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */; };
-		E1F1355A2077A44400539F1E /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E1F135592077A44300539F1E /* awsconfiguration.json */; };
 		E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F410542074823C00B39074 /* ResidentDetailCell.swift */; };
 		E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F410552074823C00B39074 /* ResidentDetailCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4C15D25410A0199805F2B6EA /* Pods-WeTrack-Re.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeTrack-Re.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeTrack-Re/Pods-WeTrack-Re.debug.xcconfig"; sourceTree = "<group>"; };
+		E10616E9207DFE7A0019E5C9 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		E1112793205390DE005F957C /* ResidentDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailController.swift; sourceTree = "<group>"; };
 		E111279520539648005F957C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		E11127972053FE99005F957C /* FAQTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQTableViewCell.swift; sourceTree = "<group>"; };
@@ -84,7 +84,6 @@
 		E153F4952074E19200C69576 /* Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
 		E160A3B52074EBE0000A5A05 /* WeTrack-Re.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WeTrack-Re.entitlements"; sourceTree = "<group>"; };
 		E17E041C20727BD800B16C09 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
-		E1861A452078961000328A9F /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		E18A2D9C204EB08A0022AB08 /* MissingResidentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingResidentsController.swift; sourceTree = "<group>"; };
 		E1AEC91E2048439000868F10 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E1AEC9202048478100868F10 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
@@ -103,7 +102,6 @@
 		E1DAA3F3204FD934004BF193 /* RelativeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeController.swift; sourceTree = "<group>"; };
 		E1DAA3F5204FE2C5004BF193 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		E1E421552073CA5C00A90208 /* ResidentDetailAnonumousController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailAnonumousController.swift; sourceTree = "<group>"; };
-		E1F135592077A44300539F1E /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		E1F410542074823C00B39074 /* ResidentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailCell.swift; sourceTree = "<group>"; };
 		E1F410552074823C00B39074 /* ResidentDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResidentDetailCell.xib; sourceTree = "<group>"; };
 		EF73D33E6884A423B2C9FF71 /* Pods_WeTrack_Re.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeTrack_Re.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,7 +132,6 @@
 				E1DAA3F5204FE2C5004BF193 /* SettingController.swift */,
 				E11127A020541179005F957C /* FAQController.swift */,
 				E11127A220542447005F957C /* AboutController.swift */,
-				E1861A452078961000328A9F /* TestController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -171,7 +168,7 @@
 				E1486BDC2047CFA300BB9245 /* Main.storyboard */,
 				E1486BDF2047CFA300BB9245 /* Assets.xcassets */,
 				E1486BE12047CFA300BB9245 /* LaunchScreen.storyboard */,
-				E1F135592077A44300539F1E /* awsconfiguration.json */,
+				E10616E9207DFE7A0019E5C9 /* awsconfiguration.json */,
 				E1486BE42047CFA300BB9245 /* Info.plist */,
 			);
 			path = "WeTrack-Re";
@@ -332,7 +329,7 @@
 				E1CC024F2054C86D00F82ED6 /* about.png in Resources */,
 				E1F410572074823C00B39074 /* ResidentDetailCell.xib in Resources */,
 				E1CC02572054CAA500F82ED6 /* developer_credit.png in Resources */,
-				E1F1355A2077A44400539F1E /* awsconfiguration.json in Resources */,
+				E10616EA207DFE7A0019E5C9 /* awsconfiguration.json in Resources */,
 				E1CC02512054C96D00F82ED6 /* css in Resources */,
 				E111279A2053FE99005F957C /* FAQTableViewCell.xib in Resources */,
 				E153F48B2074CA0F00C69576 /* NearbyCell.xib in Resources */,
@@ -459,7 +456,6 @@
 				E1DAA3EF204FA86D004BF193 /* UIViewExtensions.swift in Sources */,
 				E11127A320542447005F957C /* AboutController.swift in Sources */,
 				E1F410562074823C00B39074 /* ResidentDetailCell.swift in Sources */,
-				E1861A462078961000328A9F /* TestController.swift in Sources */,
 				E11EC7D52054F6FB00E30DA1 /* Reachability.swift in Sources */,
 				E1BC99FF204D66BD0079B455 /* ResidentTableViewCell.swift in Sources */,
 			);
@@ -604,15 +600,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "WeTrack-Re/WeTrack-Re.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EH5BAL5EWL;
 				INFOPLIST_FILE = "WeTrack-Re/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.np.iot.wetrack.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a7cc3a9-ec68-4760-90a8-e3e551a1cfce";
-				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track Dev";
+				PROVISIONING_PROFILE = "88738f6a-f9f5-4c90-9d2c-2cc6db9e375d";
+				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeTrack-Re/Bridging_Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -625,15 +621,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "WeTrack-Re/WeTrack-Re.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EH5BAL5EWL;
 				INFOPLIST_FILE = "WeTrack-Re/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.np.iot.wetrack.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a7cc3a9-ec68-4760-90a8-e3e551a1cfce";
-				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track Dev";
+				PROVISIONING_PROFILE = "88738f6a-f9f5-4c90-9d2c-2cc6db9e375d";
+				PROVISIONING_PROFILE_SPECIFIER = "Elderly Track";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeTrack-Re/Bridging_Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

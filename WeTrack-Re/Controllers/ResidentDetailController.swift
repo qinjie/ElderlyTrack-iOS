@@ -15,13 +15,6 @@ class ResidentDetailController: UITableViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var switchBtn: UISwitch!
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var nricLabel: UILabel!
-    @IBOutlet weak var dobLabel: UILabel!
-    @IBOutlet weak var status2Label: UILabel!
-    @IBOutlet weak var remarkLabel: UILabel!
-    @IBOutlet weak var beaconDetectLabel: UILabel!
-    @IBOutlet weak var beaconLocationLabel: UILabel!
-    @IBOutlet weak var beaconBelongLabel: UILabel!
     
     var resident: Resident?
     var cellTitle = [String]()
@@ -115,7 +108,7 @@ class ResidentDetailController: UITableViewController {
         var beacon : Beacon?
         
         if resident?.latestLocation != nil{
-            addressLabel.text = resident?.latestLocation?.address
+            addressLabel.text = "Last seen at " + (resident?.latestLocation!.created_at)!
             cellTitle.append("Beacon location")
             cellText.append((resident?.latestLocation?.address)!)
             

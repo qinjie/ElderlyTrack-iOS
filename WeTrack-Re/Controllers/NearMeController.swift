@@ -21,7 +21,7 @@ class NearMeController: UITableViewController {
         self.beacons = GlobalData.nearMe
         tableView.reloadData()
         
-        navigationItem.title = "Near Residents"
+        navigationItem.title = "Nearby Beacons"
         
         tableView.register(UINib(nibName: cellID, bundle: nil), forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView(frame: .zero)

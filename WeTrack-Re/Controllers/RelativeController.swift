@@ -48,6 +48,12 @@ class RelativeController: UITableViewController {
         Timer.after(1) {
             api.loadRelative(controller: self)
         }
+        
+        Timer.after(6) {
+            if (self.tableView.refreshControl?.isRefreshing)!{
+                self.tableView.refreshControl?.endRefreshing()
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

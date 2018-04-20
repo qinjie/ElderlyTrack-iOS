@@ -190,7 +190,7 @@
         <!--Missing Residents-->
         <scene sceneID="wC2-2a-5iL">
             <objects>
-                <tableViewController id="Iz8-t6-8Bs" customClass="MissingResidentsController" customModule="WeTrack_Re" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="missing" id="Iz8-t6-8Bs" customClass="MissingResidentsController" customModule="WeTrack_Re" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uwj-2f-rDw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -261,11 +261,11 @@
             </objects>
             <point key="canvasLocation" x="1777" y="-922"/>
         </scene>
-        <!--Near Me-->
+        <!--Beacons-->
         <scene sceneID="SCX-f9-Aau">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KaO-E1-Tv5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Near Me" image="Near" selectedImage="Near" id="G5P-Ua-Efl"/>
+                    <tabBarItem key="tabBarItem" title="Beacons" image="Near" selectedImage="Near" id="G5P-Ua-Efl"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="F08-4Z-Dkm">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -402,7 +402,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EGl-dh-WeY">
                                                     <rect key="frame" x="310" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="switchNotiPressed:" destination="gMm-PN-i5c" eventType="valueChanged" id="vNu-R1-aqh"/>
+                                                        <action selector="switchNotiPressed:" destination="gMm-PN-i5c" eventType="valueChanged" id="kcX-d9-UT5"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -535,6 +535,7 @@
                         <outlet property="emailLabel" destination="TKl-LW-789" id="LBk-p2-2Wf"/>
                         <outlet property="imageView" destination="Ye5-n7-HbD" id="XG9-v8-Wqj"/>
                         <outlet property="nameLabel" destination="2Fo-zW-Q41" id="kqm-c8-JNk"/>
+                        <outlet property="notificationSwitch" destination="EGl-dh-WeY" id="Yvh-uh-Eym"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aep-oL-n6b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -569,7 +570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mpq-1M-eZz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3460" y="1321"/>
+            <point key="canvasLocation" x="3591" y="1044"/>
         </scene>
         <!--Controller-->
         <scene sceneID="YXB-K3-e2F">
@@ -1105,6 +1106,6 @@
         <image name="user-anonymous" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZQ7-jQ-TAT"/>
+        <segue reference="SG5-Eg-FVD"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,6 +19,28 @@ import AWSMobileClient
 struct api{
     static func loginWithEmail(controller: UIViewController){
         
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    if !appdelegate.isInternetAvailable(){
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        controller.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                        return
+                    }
+                }
+            }
+        }
+        
+        //Display spinner alert
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let loginController = controller as? LoginController{
+                    loginController.showLoadingHUD()
+                }
+            }
+        }
+        
+        
         let httpMethodName = "POST"
         let URLString = Constant.URLLoginEmail
         let headerParameters = [
@@ -38,6 +60,14 @@ struct api{
         let invocationClient = AWSAPI_X2QIQAP347_ElderlytrackClient(forKey: "loginWithEmail")
         
         invocationClient.invoke(apiRequest).continueWith { (task:AWSTask) -> Any? in
+            //Dismiss the spinner alert
+            DispatchQueue.main.async {
+                OperationQueue.main.addOperation {
+                    if let loginController = controller as? LoginController{
+                        loginController.hideLoadingHUD()
+                    }
+                }
+            }
             
             if let error = task.error{
                 print("Error occured: \(error)")
@@ -58,7 +88,11 @@ struct api{
                     UserDefaults.standard.set(Constant.email, forKey: "email")
                     UserDefaults.standard.set(Constant.role, forKey: "role")
                     if (json["status"] as! Int) != 10{
-                        controller.displayAlert(title: "Login failed", message: "This account has been deactivated.")
+                        DispatchQueue.main.async {
+                            OperationQueue.main.addOperation {
+                                controller.displayAlert(title: "Login failed", message: "This account has been deactivated.")
+                            }
+                        }
                     }
                     loadRelative(controller: controller)
                     
@@ -82,6 +116,19 @@ struct api{
     }
     
     static func loginAnonymous(controller: UIViewController){
+        
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    if !appdelegate.isInternetAvailable(){
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        controller.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                        return
+                    }
+                }
+            }
+        }
+        
         let httpMethodName = "GET"
         let URLString = Constant.URLLoginAnonymous
         let headerParameters = [
@@ -117,7 +164,11 @@ struct api{
                     UserDefaults.standard.set(Constant.email, forKey: "email")
                     UserDefaults.standard.set(Constant.role, forKey: "role")
                     if (json["status"] as! Int) != 10{
-                        controller.displayAlert(title: "Login failed", message: "This account has been deactivated.")
+                        DispatchQueue.main.async {
+                            OperationQueue.main.addOperation {
+                                controller.displayAlert(title: "Login failed", message: "This account has been deactivated.")
+                            }
+                        }
                     }
                     loadRelative(controller: controller)
                     
@@ -126,10 +177,14 @@ struct api{
                 }
                 
             }else{
-                controller.displayAlert(title: "Login failed", message: "Please try again later.")
-                AWSSignInManager.sharedInstance().logout(completionHandler: { (success, error) in
-                    //Successfully logout
-                })
+                DispatchQueue.main.async {
+                    OperationQueue.main.addOperation {
+                        controller.displayAlert(title: "Login failed", message: "Please try again later.")
+                        AWSSignInManager.sharedInstance().logout(completionHandler: { (success, error) in
+                            //Successfully logout
+                        })
+                    }
+                }
             }
             
             print(result.statusCode)
@@ -139,6 +194,18 @@ struct api{
     }
     
     static func loadMissingResidents(controller: UIViewController? = nil){
+        
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    if !appdelegate.isInternetAvailable(){
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        controller?.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                        return
+                    }
+                }
+            }
+        }
         
         let httpMethodName = "GET"
         let URLString = Constant.URLMissing
@@ -176,8 +243,9 @@ struct api{
                 do{
                     let JSON = (try JSONSerialization.jsonObject(with: result.responseData!) as? [[String:Any]])!
                     
-                    
-                    
+                    if let viewController = controller as? MissingResidentsController{
+                        viewController.newRegionList.removeAll()
+                    }
                     GlobalData.beaconList.removeAll()
                     GlobalData.missingList.removeAll()
                     
@@ -211,9 +279,6 @@ struct api{
                             
                             if let beacons = json["beacons"] as? [[String:Any]]{
                                 var tempBeacon = [Beacon]()
-                                if let viewController = controller as? MissingResidentsController{
-                                    viewController.newRegionList.removeAll()
-                                }
                                 for beacon in beacons{
                                     
                                     let newBeacon = Beacon()
@@ -242,12 +307,23 @@ struct api{
                             }
                             
                             if let locations = json["locations"] as? [[String:Any]]{
+                                var oldDate:Date? = nil
                                 for location in locations{
-                                    let now = dateFormatter.formatDate(date: Date(), format: "yyyy-MM-dd HH:mm:ss")
                                     if let created_at = location["created_at"] as? String{
-                                        let timeInterval = now.timeIntervalSince(dateFormatter.format(string: created_at, format: "yyyy-MM-dd HH:mm:ss"))
-                                        if timeInterval < 3600{
-                                            resident.latestLocation = Location(arr: location)
+                                        var newDate = dateFormatter.format(string: created_at, format: "yyyy-MM-dd HH:mm:ss")
+                                        newDate.addTimeInterval(28800)
+                                        if oldDate == nil{
+                                            oldDate = newDate
+                                            let newLocation = Location(arr: location)
+                                            newLocation.created_at = dateFormatter.format(date: newDate, format: "yyyy-MM-dd HH:mm:ss")
+                                            resident.latestLocation = newLocation
+                                        }else{
+                                            if newDate > oldDate!{
+                                                oldDate = newDate
+                                                let newLocation = Location(arr: location)
+                                                newLocation.created_at = dateFormatter.format(date: newDate, format: "yyyy-MM-dd HH:mm:ss")
+                                                resident.latestLocation = newLocation
+                                            }
                                         }
                                     }
                                 }
@@ -258,14 +334,33 @@ struct api{
                         }
                     }
                     
-                    for i in GlobalData.missingList{
-                        if !GlobalData.allResidents.contains(i){
-                            GlobalData.allResidents.append(i)
+                    if GlobalData.missingList.count > 0{
+                        for i in 0...GlobalData.missingList.count-1{
+                            if GlobalData.allResidents.filter({$0.id == GlobalData.missingList[i].id}).first == nil{
+                                GlobalData.allResidents.append(GlobalData.missingList[i])
+                            }else{
+                                for j in 0...GlobalData.allResidents.count-1{
+                                    if GlobalData.allResidents[j].id == GlobalData.missingList[i].id{
+                                        GlobalData.allResidents[j] = GlobalData.missingList[i]
+                                    }
+                                }
+                            }
+                            
+                            if GlobalData.relativeList.first(where: {$0.id == GlobalData.missingList[i].id}) != nil{
+                                for j in 0...GlobalData.relativeList.count-1{
+                                    if GlobalData.relativeList[j].id == GlobalData.missingList[i].id{
+                                        GlobalData.relativeList[j] = GlobalData.missingList[i]
+                                    }
+                                }
+                            }
                         }
                     }
                     
+                    
+                    
                     DispatchQueue.main.async {
                         OperationQueue.main.addOperation {
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateHistory"), object: nil)
                             if let viewController = controller as? MissingResidentsController{
                                 viewController.residents = GlobalData.missingList
                                 viewController.tableView.reloadData()
@@ -297,6 +392,19 @@ struct api{
     }
     
     static func loadRelative(controller: UIViewController? = nil){
+        
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    if !appdelegate.isInternetAvailable(){
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        controller?.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                        return
+                    }
+                }
+            }
+        }
+        
         let httpMethodName = "POST"
         let URLString = Constant.URLRelatives
         let headerParameters = [
@@ -328,7 +436,7 @@ struct api{
                 DispatchQueue.main.async {
                     OperationQueue.main.addOperation {
                         if let relativeController = controller as? RelativeController{
-                            loadMissingResidents(controller: controller)
+                            loadMissingResidents(controller: relativeController)
                         }
                     }
                 }
@@ -370,6 +478,8 @@ struct api{
                         OperationQueue.main.addOperation {
                             if let loginController = controller as? LoginController{
                                 loginController.performSegue(withIdentifier: "home", sender: nil)
+                                GlobalData.showNotification = true
+                                
                             }else if let relativeController = controller as? RelativeController{
                                 relativeController.relatives = GlobalData.relativeList
                                 relativeController.tableView.reloadData()
@@ -383,7 +493,15 @@ struct api{
                 }
                 
             }else{
-                controller?.displayAlert(title: "Login failed", message: "Please try again later.")
+                DispatchQueue.main.async {
+                    OperationQueue.main.addOperation {
+                        if let loginController = controller as? LoginController{
+                            loginController.displayAlert(title: "Login failed", message: "Please try again later.")
+                        }else if let relativeController = controller as? RelativeController{
+                            relativeController.displayAlert(title: "Load relative failed", message: "Please try again later.")
+                        }
+                    }
+                }
             }
             
             print(result.statusCode)
@@ -393,6 +511,19 @@ struct api{
     }
     
     static func loadDistinctUUID(controller: UIViewController?=nil){
+        
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    if !appdelegate.isInternetAvailable(){
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        controller?.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                        return
+                    }
+                }
+            }
+        }
+        
         let httpMethodName = "GET"
         let URLString = Constant.URLDistinctUUID
         let headerParameters = [
@@ -425,7 +556,7 @@ struct api{
                         for beacon in beacons{
                             let newBeacon = Beacon()
                             newBeacon.uuid = beacon["uuid"] as? String
-                            newBeacon.identifier = "common: \(GlobalData.distinctBeacons.count+1)"
+                            newBeacon.identifier = "common#\(GlobalData.distinctBeacons.count+1)"
                             GlobalData.distinctBeacons.append(newBeacon)
                         }
                         NSKeyedArchiver.archiveRootObject(GlobalData.distinctBeacons, toFile: FilePath.distinctBeacon())
@@ -443,6 +574,19 @@ struct api{
     }
     
     static func reportMissing(resident: Resident, remark: String, controller: UIViewController?=nil){
+        
+        DispatchQueue.main.async {
+            OperationQueue.main.addOperation {
+                if let appdelegate = UIApplication.shared.delegate as? AppDelegate{
+                    if !appdelegate.isInternetAvailable(){
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        controller?.displayAlert(title: "Internet not available", message: "Please check your internet before continue.", actions: [alertAction])
+                        return
+                    }
+                }
+            }
+        }
+        
         let httpMethodName = "POST"
         let URLString = Constant.URLReportMissing
         let headerParameters = [
@@ -580,6 +724,165 @@ struct api{
                     OperationQueue.main.addOperation {
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "refreshMissingResident"), object: nil)
                     }
+                }
+                
+            }else{
+            }
+            
+            print(result.statusCode)
+            
+            return nil
+        }
+    }
+    
+    static func registerEndpoint(endpointID:String){
+        let httpMethodName = "POST"
+        let URLString = Constant.URLRegisterEndpoint
+        let headerParameters = [
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        ]
+        let httpBody: [String: Any] = [
+            "user_id": Constant.user_id,
+            "endpointID": endpointID
+        ]
+        
+        let apiRequest = AWSAPIGatewayRequest(httpMethod: httpMethodName, urlString: URLString, queryParameters: nil, headerParameters: headerParameters, httpBody: httpBody)
+        
+        let serviceConfiguration = AWSServiceConfiguration(region: .APSoutheast1, credentialsProvider: AWSMobileClient.sharedInstance().getCredentialsProvider())
+        
+        AWSAPI_X2QIQAP347_ElderlytrackClient.register(with: serviceConfiguration!, forKey: "regiserEndpoint")
+        
+        let invocationClient = AWSAPI_X2QIQAP347_ElderlytrackClient(forKey: "regiserEndpoint")
+        
+        invocationClient.invoke(apiRequest).continueWith { (task:AWSTask) -> Any? in
+            
+            if let error = task.error{
+                print("Error occured: \(error)")
+                return nil
+            }
+            
+            let result = task.result!
+            if result.statusCode == 200{
+                
+                print("Successfully register endpoint.")
+                
+            }else{
+            }
+            
+            print(result.statusCode)
+            
+            return nil
+        }
+    }
+    
+    static func disableEndpoint(controller: UIViewController?=nil){
+        let httpMethodName = "POST"
+        let URLString = Constant.URLDisableEndpoint
+        let headerParameters = [
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        ]
+        let httpBody: [String: Any] = [
+            "user_id": Constant.user_id
+        ]
+        
+        let apiRequest = AWSAPIGatewayRequest(httpMethod: httpMethodName, urlString: URLString, queryParameters: nil, headerParameters: headerParameters, httpBody: httpBody)
+        
+        let serviceConfiguration = AWSServiceConfiguration(region: .APSoutheast1, credentialsProvider: AWSMobileClient.sharedInstance().getCredentialsProvider())
+        
+        AWSAPI_X2QIQAP347_ElderlytrackClient.register(with: serviceConfiguration!, forKey: "disableEndpoint")
+        
+        let invocationClient = AWSAPI_X2QIQAP347_ElderlytrackClient(forKey: "disableEndpoint")
+        
+        invocationClient.invoke(apiRequest).continueWith { (task:AWSTask) -> Any? in
+            
+            if let error = task.error{
+                print("Error occured: \(error)")
+                return nil
+            }
+            
+            let result = task.result!
+            if result.statusCode == 200{
+                
+                print("Successfully disable endpoint.")
+                
+                do{
+                    let json = (try JSONSerialization.jsonObject(with: result.responseData!) as? [String:Any])!
+                    let status = json["status"] as? Int
+                    DispatchQueue.main.async {
+                        OperationQueue.main.addOperation {
+                            if let settingController = controller as? SettingController{
+                                if status == 1{
+                                    settingController.setSwitch()
+                                }else{
+                                    settingController.unsetSwitch()
+                                }
+                            }
+                        }
+                    }
+                    
+                } catch{
+                    print("Error parsing data to json: \(error.localizedDescription)")
+                }
+                
+            }else{
+                //Failed
+                DispatchQueue.main.async {
+                    OperationQueue.main.addOperation {
+                        if let settingController = controller as? SettingController{
+                            settingController.notificationSwitch.isOn = !settingController.notificationSwitch.isOn
+                        }
+                    }
+                }
+            }
+            
+            print(result.statusCode)
+            
+            return nil
+        }
+    }
+    
+    static func getNotificationStatus(){
+        let httpMethodName = "POST"
+        let URLString = Constant.URLNotificationStatus
+        let headerParameters = [
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        ]
+        let httpBody: [String: Any] = [
+            "user_id" : Constant.user_id
+        ]
+        
+        let apiRequest = AWSAPIGatewayRequest(httpMethod: httpMethodName, urlString: URLString, queryParameters: nil, headerParameters: headerParameters, httpBody: httpBody)
+        
+        let serviceConfiguration = AWSServiceConfiguration(region: .APSoutheast1, credentialsProvider: AWSMobileClient.sharedInstance().getCredentialsProvider())
+        
+        AWSAPI_X2QIQAP347_ElderlytrackClient.register(with: serviceConfiguration!, forKey: "getNotificationStatus")
+        
+        let invocationClient = AWSAPI_X2QIQAP347_ElderlytrackClient(forKey: "getNotificationStatus")
+        
+        invocationClient.invoke(apiRequest).continueWith { (task:AWSTask) -> Any? in
+            
+            if let error = task.error{
+                print("Error occured: \(error)")
+                return nil
+            }
+            
+            let result = task.result!
+            if result.statusCode == 200{
+                
+                do{
+                    let json = (try JSONSerialization.jsonObject(with: result.responseData!) as? [String:Any])!
+                    let status = json["status"] as? Int
+                    if status == 1{
+                        UserDefaults.standard.set("true", forKey: "notification")
+                    }else{
+                        UserDefaults.standard.set("false", forKey: "notification")
+                    }
+                    
+                } catch{
+                    print("Error parsing data to json: \(error.localizedDescription)")
                 }
                 
             }else{
