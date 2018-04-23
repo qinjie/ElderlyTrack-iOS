@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ResidentDetailController: UITableViewController {
 
@@ -125,7 +126,7 @@ class ResidentDetailController: UITableViewController {
         
         if beacon != nil{
             cellTitle.append("Beacon detect")
-            cellText.append(beacon!.name!)
+            cellText.append("ID: \(String(describing: beacon!.id!))")
         }
         
         if resident?.beacons?.count != 0 {
@@ -143,12 +144,8 @@ class ResidentDetailController: UITableViewController {
         if resident?.photo == nil || resident?.photo == ""{
             imageView.image = #imageLiteral(resourceName: "default_avatar")
         }else{
-            if let url = NSURL(string: Constant.photoURL + (resident?.photo)!){
-                let data = NSData(contentsOf: url as URL)
-                if data != nil{
-                    imageView.image = UIImage(data: data! as Data)
-                }
-            }
+            let url = URL(string: Constant.photoURL + (resident?.photo)!)
+            self.imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "default_avatar"))
         }
         nameLabel.text = resident?.name
         statusLabel.text = resident?.status.description

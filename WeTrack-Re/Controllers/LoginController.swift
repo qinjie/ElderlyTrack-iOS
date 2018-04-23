@@ -12,6 +12,7 @@ import UserNotifications
 import AWSAuthUI
 import AWSAuthCore
 import GoogleSignIn
+import SDWebImage
 
 class LoginController: UIViewController {
     
@@ -41,11 +42,15 @@ class LoginController: UIViewController {
 
     @IBAction func LoginAnonymous(_ sender: UIButton) {
         
+        SDImageCache.shared().clearMemory()
+        SDImageCache.shared().clearDisk(onCompletion: nil)
         api.loginAnonymous(controller: self)
         Constant.userphoto = nil
     }
     
     @IBAction func LoginGoogle(_ sender: UIButton) {
+        SDImageCache.shared().clearMemory()
+        SDImageCache.shared().clearDisk(onCompletion: nil)
         if !AWSSignInManager.sharedInstance().isLoggedIn {
             AWSAuthUIViewController
                 .presentViewController(with: self.navigationController!,

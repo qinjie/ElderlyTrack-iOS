@@ -25,7 +25,7 @@ struct Constant{
     
     static var device_token = ""
     static let restartTime = 300.0
-    static let photoURL = "http://128.199.93.67/WeTrack/backend/web/"
+    static let photoURL = "http://13.250.218.226/ElderlyTrack/backend/web/"
     static var token = ""
     static var username = ""
     static var role = 40
